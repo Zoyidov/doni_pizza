@@ -17,7 +17,7 @@ class SplashScreen extends StatelessWidget {
         children: [
           Center(
             child: Image.asset(
-              AppImages.splash,
+              AppImages.pizza,
               fit: BoxFit.cover,
               height: 300,
             ),
@@ -26,16 +26,12 @@ class SplashScreen extends StatelessWidget {
           Column(
             children: [
               const Text(
-                'Nuri Pizza',
+                'Welcome to Pizza',
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 40,
                     fontWeight: FontWeight.w700,
                     fontFamily: 'Sora'),
-              ),
-              Image.asset(
-                AppImages.pizza,
-                width: 100,
               ),
             ],
           ),

@@ -3,46 +3,88 @@ import 'package:path/path.dart';
 
 import '../model/food_model.dart';
 
-Future<Database> initDatabase() async {
-  final databasePath = await getDatabasesPath();
-  final path = join(databasePath, 'product_database.db');
+class FoodDatabaseHelper {
+  static final FoodDatabaseHelper instance = FoodDatabaseHelper._privateConstructor();
+  static Database? _database;
 
-  return openDatabase(
-    path,
-    version: 1,
-    onCreate: (db, version) {
-      return db.execute('''
-        CREATE TABLE products(
-          name TEXT,
-          description TEXT,
-          price REAL,
-          category TEXT,
-          imagePath TEXT
-        )
-      ''');
-    },
-  );
-}
+  FoodDatabaseHelper._privateConstructor();
 
-class ProductDatabase {
-  final Future<Database> database;
+  Future<Database> get database async {
+    if (_database != null) return _database!;
+    _database = await _initDatabase();
+    return _database!;
+  }
 
-  ProductDatabase(this.database);
+  Future<Database> _initDatabase() async {
+    final path = join(await getDatabasesPath(), 'food_database.db');
+    return await openDatabase(path, version: 1, onCreate: _createDatabase);
+  }
 
-  Future<void> insertProduct(Product product) async {
+  Future<void> _createDatabase(Database db, int version) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS foods (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        description TEXT,
+        imagePath TEXT,
+        price REAL,
+        count INTEGER DEFAULT 1
+      )
+    ''');
+  }
+
+  Future<int> insertFood(FoodItem foodItem) async {
     final db = await database;
-    await db.insert(
-      'products',
-      product.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
+
+    final existingProducts = await db.query('foods', where: 'name = ?', whereArgs: [foodItem.name]);
+
+    if (existingProducts.isNotEmpty) {
+      final existingProduct = existingProducts.first;
+      final existingCount = existingProduct['count'] as int?;
+      final updatedCount = (existingCount ?? 0) + 1;
+      await db.update(
+        'foods',
+        {'count': updatedCount},
+        where: 'name = ?',
+        whereArgs: [foodItem.name],
+      );
+    } else {
+      await db.insert('foods', foodItem.toMap());
+    }
+    return 0;
+  }
+
+
+
+  Future<List<FoodItem>> fetchAllFoodItems() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('foods');
+    return List.generate(maps.length, (index) {
+      return FoodItem.fromMap(maps[index]);
+    });
+  }
+
+  Future<void> updateFoodCount(int id, int count) async {
+    final db = await database;
+    await db.update(
+      'foods',
+      {'count': count},
+      where: 'id = ?',
+      whereArgs: [id],
     );
   }
 
-  Future<List<Product>> getProducts() async {
+  Future<void> deleteFood(int id) async {
     final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query('products');
-    return List.generate(maps.length, (i) {
-      return Product.fromMap(maps[i]);
-    });
+    await db.delete(
+      'foods',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  Future<void> deleteAll() async {
+    final db = await database;
+    await db.delete('foods');
   }
 }

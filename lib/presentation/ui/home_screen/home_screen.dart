@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pizza/data/model/food_model.dart';
 import 'package:pizza/presentation/ui/home_screen/promotions/promotions.dart';
 import 'package:pizza/utils/icons.dart';
@@ -16,6 +17,7 @@ class MenuItem {
   final double price;
   final String category;
   final String imagePath;
+  final int count;
 
   MenuItem({
     required this.name,
@@ -23,9 +25,9 @@ class MenuItem {
     required this.price,
     required this.category,
     required this.imagePath,
+    required this.count,
   });
 }
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -42,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
       price: 4.99,
       category: 'Pizza',
       imagePath: 'assets/images/pizza.png',
+      count: 1,
     ),
     MenuItem(
       name: 'Burger',
@@ -49,6 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
       price: 3.99,
       category: 'Burger',
       imagePath: 'assets/images/burger.png',
+      count: 1,
     ),
     MenuItem(
       name: 'Chicken',
@@ -56,6 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
       price: 6.699,
       category: 'Chicken',
       imagePath: 'assets/images/chicken.png',
+      count: 1,
     ),
     MenuItem(
       name: 'Dessert',
@@ -63,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
       price: 5.49,
       category: 'Dessert',
       imagePath: 'assets/images/dessert.png',
+      count: 1,
     ),
   ];
 
@@ -192,14 +198,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const Promotions(),
             Padding(
-              padding: const EdgeInsets.only(left: 10.0,top: 10.0),
-              child: Text(
-                  "Popular",
+              padding: const EdgeInsets.only(left: 10.0, top: 10.0),
+              child: Text("Popular",
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
-                  )
-              ),
+                  )),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -246,7 +250,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Image.asset(item.imagePath),
                                   ),
                                 ),
-
                               ),
                             ),
                           ),
@@ -284,17 +287,35 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ),
                                     ZoomTapAnimation(
-                                      onTap: () {},
+                                      onTap: () {
+                                        final foodItem = FoodItem(
+                                          name: item.name,
+                                          description: item.description,
+                                          imagePath: item.imagePath,
+                                          price: item.price,
+                                          count: item.count,
+                                        );
+                                        FoodDatabaseHelper.instance
+                                            .insertFood(foodItem);
+                                        Fluttertoast.showToast(
+                                          msg: 'Successfully added to cart!',
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          backgroundColor: Colors.white,
+                                          textColor: Colors.black,
+                                          fontSize: 16.0,
+                                        );
+                                      },
                                       child: Container(
                                         padding: const EdgeInsets.all(2),
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(12),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
                                           color: Colors.red,
                                         ),
                                         child: const Icon(Icons.add),
                                       ),
                                     )
-
                                   ],
                                 ),
                               ],
