@@ -34,7 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 backgroundColor: Colors.black,
                 child: ClipOval(
                   child: Image.asset(
-                    AppImages.splash,
+                    AppImages.profile,
                     fit: BoxFit.cover,
                     height: 40,
                   ),

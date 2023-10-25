@@ -3,11 +3,15 @@ import 'package:path/path.dart';
 
 import '../model/food_model.dart';
 
-class FoodDatabaseHelper {
-  static final FoodDatabaseHelper instance = FoodDatabaseHelper._privateConstructor();
+class LocalDatabase {
+  static final LocalDatabase instance = LocalDatabase._privateConstructor();
   static Database? _database;
 
-  FoodDatabaseHelper._privateConstructor();
+  LocalDatabase._privateConstructor();
+
+  factory LocalDatabase() {
+    return instance;
+  }
 
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -22,7 +26,7 @@ class FoodDatabaseHelper {
 
   Future<void> _createDatabase(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE IF NOT EXISTS foods (
+      CREATE TABLE IF NOT EXISTS food_table (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
         description TEXT,
@@ -33,58 +37,56 @@ class FoodDatabaseHelper {
     ''');
   }
 
-  Future<int> insertFood(FoodItem foodItem) async {
+  Future<int> insertFood(FoodModel foodItem) async {
     final db = await database;
 
-    final existingProducts = await db.query('foods', where: 'name = ?', whereArgs: [foodItem.name]);
+    final existingProducts = await db.query('food_table', where: 'name = ?', whereArgs: [foodItem.name]);
 
     if (existingProducts.isNotEmpty) {
       final existingProduct = existingProducts.first;
       final existingCount = existingProduct['count'] as int?;
       final updatedCount = (existingCount ?? 0) + 1;
       await db.update(
-        'foods',
+        'food_table',
         {'count': updatedCount},
         where: 'name = ?',
         whereArgs: [foodItem.name],
       );
     } else {
-      await db.insert('foods', foodItem.toMap());
+      await db.insert('food_table', foodItem.toMap());
     }
     return 0;
   }
 
-
-
-  Future<List<FoodItem>> fetchAllFoodItems() async {
+  Future<List<FoodModel>> fetchAllFoodItems() async {
     final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query('foods');
+    final List<Map<String, dynamic>> maps = await db.query('food_table');
     return List.generate(maps.length, (index) {
-      return FoodItem.fromMap(maps[index]);
+      return FoodModel.fromMap(maps[index]);
     });
   }
 
-  Future<void> updateFoodCount(int id, int count) async {
+  Future<void> updateFoodByCount(String description, int newCount) async {
     final db = await database;
     await db.update(
-      'foods',
-      {'count': count},
-      where: 'id = ?',
-      whereArgs: [id],
+      'food_table',
+      {'count': newCount},
+      where: 'description = ?',
+      whereArgs: [description],
     );
   }
 
-  Future<void> deleteFood(int id) async {
+  Future<void> deleteFood(String description) async {
     final db = await database;
     await db.delete(
-      'foods',
-      where: 'id = ?',
-      whereArgs: [id],
+      'food_table',
+      where: 'description = ?',
+      whereArgs: [description],
     );
   }
 
   Future<void> deleteAll() async {
     final db = await database;
-    await db.delete('foods');
+    await db.delete('food_table');
   }
 }

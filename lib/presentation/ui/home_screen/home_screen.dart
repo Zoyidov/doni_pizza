@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pizza/data/bloc/state_bloc.dart';
 import 'package:pizza/data/model/food_model.dart';
 import 'package:pizza/presentation/ui/home_screen/promotions/promotions.dart';
 import 'package:pizza/utils/icons.dart';
 import 'package:pizza/widgets/global_textfield.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
-
-import '../../../data/database/food_database.dart';
 import '../detail_screen/detail_screen.dart';
 import 'categories/categories.dart';
 
@@ -95,11 +95,13 @@ class _HomeScreenState extends State<HomeScreen> {
       } else {
         filteredFoods = allMenuItems.where((food) {
           final name = food.name.toLowerCase();
-          return name.contains(query);
+          final description = food.description.toLowerCase();
+          return name.contains(query) || description.contains(query);
         }).toList();
       }
     });
   }
+
 
   void updateCategory(String category) {
     setState(() {
@@ -288,15 +290,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     ZoomTapAnimation(
                                       onTap: () {
-                                        final foodItem = FoodItem(
-                                          name: item.name,
-                                          description: item.description,
-                                          imagePath: item.imagePath,
-                                          price: item.price,
-                                          count: item.count,
+                                        context.read<FoodBloc>().add(
+                                          AddFoodEvent(FoodModel(
+                                            name: item.name,
+                                            description: item.description,
+                                            imagePath: item.imagePath,
+                                            price: item.price,
+                                            count: item.count,
+                                          ))
                                         );
-                                        FoodDatabaseHelper.instance
-                                            .insertFood(foodItem);
                                         Fluttertoast.showToast(
                                           msg: 'Successfully added to cart!',
                                           toastLength: Toast.LENGTH_SHORT,

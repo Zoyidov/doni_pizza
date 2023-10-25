@@ -1,10 +1,37 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pizza/presentation/ui/tab_box/tab_box.dart';
 import 'package:pizza/utils/icons.dart';
-import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
-class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  double downloadProgress = 0.0;
+  final double maxProgress = 1.0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future<void> simulateDownloadProgress() async {
+      while (downloadProgress < maxProgress) {
+        await Future.delayed(Duration(milliseconds: 100));
+        setState(() {
+          downloadProgress += 0.1;
+        });
+      }
+
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => TabBox()));
+    }
+
+    simulateDownloadProgress();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,54 +39,21 @@ class SplashScreen extends StatelessWidget {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
+        toolbarHeight: 0,
       ),
       body: Column(
         children: [
-          Center(
-            child: Image.asset(
-              AppImages.pizza,
-              fit: BoxFit.cover,
-              height: 300,
+          Lottie.asset(AppImages.splash),
+          Padding(
+            padding: const EdgeInsets.only(left: 40.0,right: 40.0,top: 20.0),
+            child: LinearProgressIndicator(
+              borderRadius: BorderRadius.circular(50),
+              value: downloadProgress,
+              minHeight: 10,
+              backgroundColor: Colors.white24,
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
             ),
           ),
-          SizedBox(height: 20,),
-          Column(
-            children: [
-              const Text(
-                'Welcome to Pizza',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 40,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: 'Sora'),
-              ),
-            ],
-          ),
-          const Spacer(),
-          ZoomTapAnimation(
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>TabBox()));
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(
-                  'Get Started',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Sora',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 100.0,
-          )
         ],
       ),
     );

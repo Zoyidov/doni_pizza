@@ -6,6 +6,7 @@ import 'package:pizza/presentation/ui/tab_box/tab_box.dart';
 import 'package:provider/provider.dart';
 
 
+import 'data/bloc/state_bloc.dart';
 import 'data/cubit/tab_cubit.dart';
 
 void main() async {
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
           create: (context) => TabCubit(),
           child:  TabBox(),
         ),
+        BlocProvider(create: (context) => FoodBloc()..add(LoadTodosEvent())),
       ],
       child: MaterialApp(
         theme: ThemeData(useMaterial3: false),
