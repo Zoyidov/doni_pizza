@@ -6,12 +6,15 @@ import 'package:pizza/presentation/ui/tab_box/tab_box.dart';
 import 'package:provider/provider.dart';
 
 
+import 'data/bloc/order_bloc.dart';
 import 'data/bloc/state_bloc.dart';
 import 'data/cubit/tab_cubit.dart';
+import 'data/database/orders_database.dart';
 
 void main() async {
   runApp(const MyApp());
   Fluttertoast.showToast(msg: "App initialized");
+  await OrderDatabase.instance.initDatabase();
 }
 
 class MyApp extends StatelessWidget {
@@ -26,6 +29,7 @@ class MyApp extends StatelessWidget {
           child:  TabBox(),
         ),
         BlocProvider(create: (context) => FoodBloc()..add(LoadTodosEvent())),
+        BlocProvider(create: (context) => OrderBloc()),
       ],
       child: MaterialApp(
         theme: ThemeData(useMaterial3: false),

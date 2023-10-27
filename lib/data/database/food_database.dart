@@ -33,6 +33,7 @@ class LocalDatabase {
         imagePath TEXT,
         price REAL,
         count INTEGER DEFAULT 1
+        
       )
     ''');
   }
@@ -57,6 +58,20 @@ class LocalDatabase {
     }
     return 0;
   }
+
+  Future<double> calculateTotalCost() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('food_table');
+    double totalCost = 0.0;
+
+    for (final map in maps) {
+      final foodItem = FoodModel.fromMap(map);
+      totalCost += foodItem.price * (foodItem.count ?? 1);
+    }
+
+    return totalCost;
+  }
+
 
   Future<List<FoodModel>> fetchAllFoodItems() async {
     final db = await database;

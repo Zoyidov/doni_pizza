@@ -12,16 +12,18 @@ class AddFoodEvent extends FoodEvent {
   final FoodModel food;
 
   AddFoodEvent(this.food);
-}class UpdateFoodEvent extends FoodEvent {
+}
+
+class UpdateFoodEvent extends FoodEvent {
   final FoodModel food;
 
   UpdateFoodEvent(this.food);
 }
 
 class DeleteFoods extends FoodEvent {
-
   DeleteFoods();
 }
+
 
 class DeleteFood extends FoodEvent {
   final FoodModel food;
@@ -36,6 +38,13 @@ class UpdateCountEvent extends FoodEvent {
   UpdateCountEvent(this.food, this.newCount);
 }
 
+class UpdateTotalCostEvent extends FoodEvent {
+  final double newTotalCost;
+
+  UpdateTotalCostEvent(this.newTotalCost);
+}
+
+
 class IncrementCountEvent extends FoodEvent {
   final FoodModel food;
 
@@ -48,19 +57,18 @@ class DecrementCountEvent extends FoodEvent {
   DecrementCountEvent(this.food);
 }
 
-
-
 // States
 abstract class FoodState {}
 
 class TodoInitialState extends FoodState {}
 
-class TodoLoadingState extends FoodState {}
+class FoodLoadingState extends FoodState {}
 
 class FoodLoadedState extends FoodState {
   final List<FoodModel> foods;
+  final double totalValue;
 
-  FoodLoadedState(this.foods);
+  FoodLoadedState(this.foods, this.totalValue);
 }
 
 class FoodErrorState extends FoodState {
@@ -69,26 +77,34 @@ class FoodErrorState extends FoodState {
   FoodErrorState(this.errorMessage);
 }
 
-
 class FoodBloc extends Bloc<FoodEvent, FoodState> {
   final LocalDatabase foodRepository = LocalDatabase();
+  List<FoodModel> foodItems = [];
+  double totalValue = 0.0;
 
   FoodBloc() : super(TodoInitialState()) {
     on<LoadTodosEvent>(_handleLoadTodosEvent);
     on<AddFoodEvent>(_handleAddFoodEvent);
     on<DeleteFoods>(_handleDeleteFoods);
     on<UpdateCountEvent>(_handleUpdateCountEvent);
-    on<DeleteFood>(_handleDeleteFoodEvent as EventHandler<DeleteFood, FoodState>);
+    on<DeleteFood>(_handleDeleteFoodEvent);
     on<IncrementCountEvent>(_handleIncrementCountEvent);
     on<DecrementCountEvent>(_handleDecrementCountEvent);
-
+    on<UpdateTotalCostEvent>(_handleUpdateTotalCostEvent);
   }
 
+  void updateTotalValue() {
+    totalValue = foodItems.fold(0.0, (previousValue, item) => previousValue + item.price * item.count);
+  }
+
+
   void _handleLoadTodosEvent(LoadTodosEvent event, Emitter<FoodState> emit) async {
-    emit(TodoLoadingState());
+    emit(FoodLoadingState());
     try {
       final foods = await foodRepository.fetchAllFoodItems();
-      emit(FoodLoadedState(foods));
+      foodItems = foods;
+      updateTotalValue();
+      emit(FoodLoadedState(foods, totalValue));
     } catch (e) {
       emit(FoodErrorState('Failed to load foods: $e'));
     }
@@ -98,7 +114,9 @@ class FoodBloc extends Bloc<FoodEvent, FoodState> {
     try {
       await foodRepository.insertFood(event.food);
       final foods = await foodRepository.fetchAllFoodItems();
-      emit(FoodLoadedState(foods));
+      foodItems = foods;
+      updateTotalValue();
+      emit(FoodLoadedState(foods, totalValue));
     } catch (e) {
       emit(FoodErrorState('Failed to add food: $e'));
     }
@@ -109,7 +127,9 @@ class FoodBloc extends Bloc<FoodEvent, FoodState> {
       final updatedFood = event.food.copyWith(count: event.newCount);
       await foodRepository.updateFoodByCount(updatedFood.description, updatedFood.count);
       final foods = await foodRepository.fetchAllFoodItems();
-      emit(FoodLoadedState(foods));
+      foodItems = foods;
+      updateTotalValue();
+      emit(FoodLoadedState(foods, totalValue));
     } catch (e) {
       emit(FoodErrorState('Failed to update food count: $e'));
     }
@@ -120,9 +140,10 @@ class FoodBloc extends Bloc<FoodEvent, FoodState> {
       final FoodModel updatedFood = event.food.copyWith(count: event.food.count + 1);
       await foodRepository.updateFoodByCount(updatedFood.description, updatedFood.count);
       final foods = await foodRepository.fetchAllFoodItems();
-      emit(FoodLoadedState(foods));
+      foodItems = foods;
+      updateTotalValue();
+      emit(FoodLoadedState(foods, totalValue));
     } catch (e) {
-
       emit(FoodErrorState('Failed to increment item count: $e'));
     }
   }
@@ -133,21 +154,22 @@ class FoodBloc extends Bloc<FoodEvent, FoodState> {
         final FoodModel updatedFood = event.food.copyWith(count: event.food.count - 1);
         await foodRepository.updateFoodByCount(updatedFood.description, updatedFood.count);
         final foods = await foodRepository.fetchAllFoodItems();
-        emit(FoodLoadedState(foods));
+        foodItems = foods;
+        updateTotalValue();
+        emit(FoodLoadedState(foods, totalValue));
       }
     } catch (e) {
       emit(FoodErrorState('Failed to decrement item count: $e'));
     }
   }
 
-
-
-
   void _handleDeleteFoods(DeleteFoods event, Emitter<FoodState> emit) async {
     try {
       await foodRepository.deleteAll();
       final foods = await foodRepository.fetchAllFoodItems();
-      emit(FoodLoadedState(foods));
+      foodItems = foods;
+      totalValue = 0.0;
+      emit(FoodLoadedState(foods, totalValue));
     } catch (e) {
       emit(FoodErrorState('Failed to delete foods: $e'));
     }
@@ -159,11 +181,20 @@ class FoodBloc extends Bloc<FoodEvent, FoodState> {
 
       await foodRepository.deleteFood(food.description);
       final foods = await foodRepository.fetchAllFoodItems();
-      emit(FoodLoadedState(foods));
+      foodItems = foods;
+      updateTotalValue();
+      emit(FoodLoadedState(foods, totalValue));
     } catch (e) {
-      print(e);
       emit(FoodErrorState('Failed to delete food: $e'));
     }
   }
 
+  void _handleUpdateTotalCostEvent(UpdateTotalCostEvent event, Emitter<FoodState> emit) async {
+    try {
+      totalValue = event.newTotalCost;
+      emit(FoodLoadedState(foodItems, totalValue));
+    } catch (e) {
+      emit(FoodErrorState('Failed to update total cost: $e'));
+    }
+  }
 }

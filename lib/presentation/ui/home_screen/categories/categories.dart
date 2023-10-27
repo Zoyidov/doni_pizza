@@ -25,6 +25,7 @@ class _CategoriesState extends State<Categories> {
     return SizedBox(
       height: 120,
       child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         itemCount: widget.imagePaths.length,
         itemBuilder: (context, index) {

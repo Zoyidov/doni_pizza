@@ -14,5 +14,6 @@ class AppImages{
   //lottie
   static const String empty = 'assets/images/empty.json';
   static const String splash = "assets/images/splash.json";
+  static const String clock = "assets/images/clock.json";
 
 }
