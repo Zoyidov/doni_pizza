@@ -5,6 +5,8 @@ class AppImages{
   static const String burger = 'assets/images/burger.png';
   static const String chicken = 'assets/images/chicken.png';
   static const String dessert = 'assets/images/dessert.png';
+  static const String doni = 'assets/images/doni.png';
+  static const String splashj = 'assets/images/splash.JPG';
 
   //svg
   static const String search = 'assets/svg/search.svg';

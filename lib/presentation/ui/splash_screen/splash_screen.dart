@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:pizza/presentation/ui/tab_box/tab_box.dart';
 import 'package:pizza/utils/icons.dart';
 
@@ -10,48 +9,72 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
-  double downloadProgress = 0.0;
-  final double maxProgress = 1.0;
+class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<Offset> _animation;
 
   @override
   void initState() {
     super.initState();
 
-    Future<void> simulateDownloadProgress() async {
-      while (downloadProgress < maxProgress) {
-        await Future.delayed(const Duration(milliseconds: 100));
-        setState(() {
-          downloadProgress += 0.1;
-        });
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 3),
+    );
+
+    _animation = Tween<Offset>(
+      begin: Offset(4, -4),
+      end: Offset(0, -6),
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.bounceIn));
+
+    _controller.forward();
+
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => TabBox()));
       }
+    });
+  }
 
-      // ignore: use_build_context_synchronously
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const TabBox()));
-    }
-
-    simulateDownloadProgress();
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        toolbarHeight: 0,
-      ),
-      body: Column(
+      body: Stack(
         children: [
-          Lottie.asset(AppImages.splash),
-          Padding(
-            padding: const EdgeInsets.only(left: 40.0,right: 40.0,top: 20.0),
-            child: LinearProgressIndicator(
-              borderRadius: BorderRadius.circular(50),
-              value: downloadProgress,
-              minHeight: 10,
-              backgroundColor: Colors.white24,
-              valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
+          // Background Image
+          Image.asset(
+            AppImages.splashj,
+            fit: BoxFit.cover,
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+          ),
+          Center(
+            child: SlideTransition(
+              position: _animation,
+              child: Text(
+                "Bomisilar eee 😅",
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 32.0,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Sora',
+                  letterSpacing: 5.0,
+                  shadows: [
+                    Shadow(
+                      color: Colors.black,
+                      offset: Offset(3, 3),
+                      blurRadius: 5,
+                    ),
+                  ],
+                ),
+              ),
+
             ),
           ),
         ],
