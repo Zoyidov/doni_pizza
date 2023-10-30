@@ -8,29 +8,12 @@ import 'package:pizza/presentation/ui/home_screen/promotions/promotions.dart';
 import 'package:pizza/utils/icons.dart';
 import 'package:pizza/widgets/global_textfield.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
+import '../../../data/model/item_model.dart';
 import '../detail_screen/detail_screen.dart';
 import 'categories/categories.dart';
 
-class MenuItem {
-  final String name;
-  final String description;
-  final double price;
-  final String category;
-  final String imagePath;
-  final int count;
-
-  MenuItem({
-    required this.name,
-    required this.description,
-    required this.price,
-    required this.category,
-    required this.imagePath,
-    required this.count,
-  });
-}
-
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -39,7 +22,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final List<MenuItem> allMenuItems = [
     MenuItem(
-      name: 'Pizza',
+      name: 'Donar',
       description: 'Donar',
       price: 4.99,
       category: 'Pizza',
@@ -47,11 +30,27 @@ class _HomeScreenState extends State<HomeScreen> {
       count: 1,
     ),
     MenuItem(
-      name: 'Burger',
-      description: 'Cheeseburger',
-      price: 3.99,
-      category: 'Burger',
-      imagePath: 'assets/images/burger.png',
+      name: 'Pepperoni',
+      description: 'Pepperoni',
+      price: 4.69,
+      category: 'Pizza',
+      imagePath: 'assets/images/pepperoni.png',
+      count: 1,
+    ),
+    MenuItem(
+      name: 'Pepperoni Cheese',
+      description: 'Pepperoni Cheese',
+      price: 4.44,
+      category: 'Pizza',
+      imagePath: 'assets/images/cheese_pepperoni.png',
+      count: 1,
+    ),
+    MenuItem(
+      name: 'MushroomPizza',
+      description: 'Mushroom',
+      price: 6.46,
+      category: 'Pizza',
+      imagePath: 'assets/images/mushroom.png',
       count: 1,
     ),
     MenuItem(
@@ -63,11 +62,75 @@ class _HomeScreenState extends State<HomeScreen> {
       count: 1,
     ),
     MenuItem(
-      name: 'Dessert',
-      description: 'Salad',
+      name: 'KFC',
+      description: 'KFC',
+      price: 3.49,
+      category: 'Chicken',
+      imagePath: 'assets/images/kfc.png',
+      count: 1,
+    ),
+    MenuItem(
+      name: 'Burger',
+      description: 'Cheeseburger',
+      price: 3.99,
+      category: 'Burger',
+      imagePath: 'assets/images/burger.png',
+      count: 1,
+    ),
+    MenuItem(
+      name: 'Beef Burger',
+      description: 'Beef Burger',
+      price: 2.49,
+      category: 'Burger',
+      imagePath: 'assets/images/beef_burger.png',
+      count: 1,
+    ),
+    MenuItem(
+      name: 'Classic Burger',
+      description: 'Classic Burger',
+      price: 2.55,
+      category: 'Burger',
+      imagePath: 'assets/images/classic_burger.png',
+      count: 1,
+    ),
+    MenuItem(
+      name: 'Cheese Burger',
+      description: 'Cheese Burger',
+      price: 3.5,
+      category: 'Burger',
+      imagePath: 'assets/images/cheese_burger.png',
+      count: 1,
+    ),
+    MenuItem(
+      name: 'Cobb Salad',
+      description: 'Cobb Salad',
       price: 5.49,
-      category: 'Dessert',
+      category: 'Salad',
       imagePath: 'assets/images/dessert.png',
+      count: 1,
+    ),
+    MenuItem(
+      name: 'Caesar Salad',
+      description: 'Caesar Salad',
+      price: 6.59,
+      category: 'Salad',
+      imagePath: 'assets/images/caesar.png',
+      count: 1,
+    ),
+    MenuItem(
+      name: 'Strawberry',
+      description: 'Strawberry',
+      price: 7.4,
+      category: 'Fruits',
+      imagePath: 'assets/images/strobery.png',
+      count: 1,
+    ),
+    MenuItem(
+      name: 'Mango',
+      description: 'Mango',
+      price: 4.6,
+      category: 'Fruits',
+      imagePath: 'assets/images/mango.png',
       count: 1,
     ),
   ];
@@ -136,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   filterFoods(query);
                 },
               )
-            : Text(
+            : const Text(
                 "Menu",
                 style: TextStyle(
                   color: Colors.black,
@@ -157,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         filterFoods('');
                       });
                     },
-                    icon: Icon(Icons.close, color: Colors.black),
+                    icon: const Icon(Icons.close, color: Colors.black),
                   ),
                 )
               : Padding(
@@ -188,19 +251,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 'assets/images/pizza.png',
                 'assets/images/chicken.png',
                 'assets/images/dessert.png',
+                'assets/images/strobery.png',
               ],
               categoryText: const [
                 'All',
                 'Burger',
                 'Pizza',
                 'Chicken',
-                'Dessert',
+                'Salad',
+                'Fruits',
               ],
               onSelectedCategory: updateCategory,
             ),
-            const Promotions(),
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0, top: 10.0),
+            Promotions(),
+            const Padding(
+              padding: EdgeInsets.only(left: 10.0, top: 10.0),
               child: Text("Popular",
                   style: TextStyle(
                     fontSize: 14,

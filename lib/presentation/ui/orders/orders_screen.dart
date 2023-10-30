@@ -7,7 +7,7 @@ import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../data/bloc/order_bloc.dart';
 
 class OrdersScreen extends StatefulWidget {
-  const OrdersScreen({Key? key}) : super(key: key);
+  const OrdersScreen({super.key});
 
   @override
   State<OrdersScreen> createState() => _OrdersScreenState();
@@ -65,7 +65,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
             return const Center(child: CircularProgressIndicator());
           } else if (state is OrderLoadedState) {
             final orders = state.orders;
-            return orders.isEmpty? Center(child: Icon(CupertinoIcons.news, size: 100,color: Colors.black,)):ListView.separated(
+            return orders.isEmpty? const Center(child: Icon(CupertinoIcons.news, size: 100,color: Colors.black,)):ListView.separated(
               physics: const BouncingScrollPhysics(),
               itemCount: orders.length,
               separatorBuilder: (context, index) {

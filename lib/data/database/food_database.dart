@@ -1,4 +1,5 @@
 import 'package:sqflite/sqflite.dart';
+// ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 
 import '../model/food_model.dart';
@@ -66,7 +67,7 @@ class LocalDatabase {
 
     for (final map in maps) {
       final foodItem = FoodModel.fromMap(map);
-      totalCost += foodItem.price * (foodItem.count ?? 1);
+      totalCost += foodItem.price * (foodItem.count);
     }
 
     return totalCost;

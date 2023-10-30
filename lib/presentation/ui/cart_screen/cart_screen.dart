@@ -56,6 +56,7 @@ class _CartScreenState extends State<CartScreen> {
       textColor: Colors.black,
       fontSize: 22.0,
     );
+    // ignore: use_build_context_synchronously
     context.read<FoodBloc>().add(DeleteFoods());
 
     setState(() {
@@ -68,7 +69,6 @@ class _CartScreenState extends State<CartScreen> {
 
     final foodNames = foodItems.map((item) => item.name).join(', ');
 
-    print('newTotalCost: $newTotalCost');
 
     final order = OrderModel(
       foodNames: foodNames,
@@ -264,13 +264,13 @@ class _CartScreenState extends State<CartScreen> {
                     foodItems.isNotEmpty
                         ? showLottie
                             ? Padding(
-                                padding: const EdgeInsets.only(bottom: 150.0),
+                                padding: const EdgeInsets.only(bottom: 130.0,top: 5.0),
                                 child: ZoomTapAnimation(
                                   onTap: _showLottieAndDeleteItems,
                                   child: Container(
                                     width: MediaQuery.of(context).size.width,
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
+                                      borderRadius: BorderRadius.circular(16),
                                       color: Colors.black,
                                     ),
                                     child: const Padding(
@@ -285,13 +285,13 @@ class _CartScreenState extends State<CartScreen> {
                                 ),
                               )
                             : Padding(
-                                padding: const EdgeInsets.only(bottom: 150.0),
+                                padding: const EdgeInsets.only(bottom: 130.0,top: 5.0),
                                 child: ZoomTapAnimation(
                                   onTap: _showLottieAndDeleteItems,
                                   child: Container(
                                     width: MediaQuery.of(context).size.width,
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
+                                      borderRadius: BorderRadius.circular(16),
                                       color: Colors.black,
                                     ),
                                     child: Padding(

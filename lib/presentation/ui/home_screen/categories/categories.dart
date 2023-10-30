@@ -6,14 +6,15 @@ class Categories extends StatefulWidget {
   final List<String> categoryText;
   final Function(String) onSelectedCategory;
 
-  Categories({
-    Key? key,
+  const Categories({
+    super.key,
     required this.imagePaths,
     required this.categoryText,
     required this.onSelectedCategory,
-  }) : super(key: key);
+  });
 
   @override
+  // ignore: library_private_types_in_public_api
   _CategoriesState createState() => _CategoriesState();
 }
 

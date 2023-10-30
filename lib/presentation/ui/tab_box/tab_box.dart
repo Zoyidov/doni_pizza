@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +11,7 @@ import '../../../data/cubit/tab_cubit.dart';
 import '../../../data/database/food_database.dart';
 
 class TabBox extends StatefulWidget {
-  TabBox({Key? key}) : super(key: key);
+  const TabBox({super.key});
 
   @override
   _TabBoxState createState() => _TabBoxState();
@@ -54,15 +56,15 @@ class _TabBoxState extends State<TabBox> {
         unselectedItemColor: Colors.grey,
         items: [
           DotNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: const Icon(Icons.home),
             selectedColor: Colors.black,
           ),
           DotNavigationBarItem(
             icon: isDatabaseEmpty
-                ? Icon(Icons.shopping_cart)
+                ? const Icon(Icons.shopping_cart)
                 : Stack(
               children: [
-                Icon(Icons.shopping_cart),
+                const Icon(Icons.shopping_cart),
                 Positioned(
                   right: 0,
                   child: Container(
@@ -79,11 +81,11 @@ class _TabBoxState extends State<TabBox> {
             selectedColor: Colors.black,
           ),
           DotNavigationBarItem(
-            icon: Icon(Icons.access_time_outlined),
+            icon: const Icon(Icons.access_time_outlined),
             selectedColor: Colors.black,
           ),
           DotNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: const Icon(Icons.person),
             selectedColor: Colors.black,
           ),
         ],

@@ -18,7 +18,7 @@ class GlobalTextField extends StatefulWidget {
   final String? helperText;
 
   const GlobalTextField({
-    Key? key,
+    super.key,
     required this.hintText,
     required this.keyboardType,
     required this.textInputAction,
@@ -30,7 +30,7 @@ class GlobalTextField extends StatefulWidget {
     this.max,
     this.maxLength,
     this.helperText,
-  }) : super(key: key);
+  });
 
   @override
   _GlobalTextFieldState createState() => _GlobalTextFieldState();
@@ -116,7 +116,7 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
               borderRadius: BorderRadius.circular(10),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.black, width: 2),
+              borderSide: const BorderSide(color: Colors.black, width: 2),
               borderRadius: BorderRadius.circular(10),
             ),
             errorBorder: OutlineInputBorder(

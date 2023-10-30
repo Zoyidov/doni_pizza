@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pizza/presentation/ui/splash_screen/splash_screen.dart';
 import 'package:pizza/presentation/ui/tab_box/tab_box.dart';
+// ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
 
 
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<TabCubit>(
           create: (context) => TabCubit(),
-          child:  TabBox(),
+          child:  const TabBox(),
         ),
         BlocProvider(create: (context) => FoodBloc()..add(LoadTodosEvent())),
         BlocProvider(create: (context) => OrderBloc()),

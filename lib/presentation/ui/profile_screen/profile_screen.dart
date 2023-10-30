@@ -2,13 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pizza/widgets/global_textfield.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
-
-import '../../../utils/icons.dart';
 import '../../../widgets/dialog_gallery_camera.dart';
-import '../../../widgets/my_dialog.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -37,22 +35,54 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? imagePath = prefs.getString(profileImageKey);
     if (imagePath != null) {
-      setState(() {
-        selectedImagePath = imagePath;
-      });
+      final appDocDir = await getApplicationDocumentsDirectory();
+      final localPath = '${appDocDir.path}/$profileImageKey.jpg';
+      final file = File(localPath);
+
+      if (file.existsSync()) {
+        setState(() {
+          selectedImagePath = localPath;
+        });
+      }
     }
   }
+
 
   Future<void> _loadUserData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     username = prefs.getString(usernameKey) ?? "User";
     phoneNumber = prefs.getString(phoneNumberKey) ?? "+(998) __ ___ __ __";
+
+    final String? imagePath = prefs.getString(profileImageKey);
+    if (imagePath != null) {
+      try {
+
+        final file = File(imagePath);
+        if (file.existsSync()) {
+          final extractedPath = imagePath.substring(imagePath.indexOf("/private/var/mobile/Containers/Data/Application/"));
+          selectedImagePath = extractedPath;
+        } else {
+        }
+      // ignore: empty_catches
+      } catch (e) {
+      }
+    }
+
     setState(() {});
   }
 
-  Future<void> _saveProfileImage(String imagePath) async {
+
+
+
+  Future<void> saveProfileImage(String imagePath) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+
     prefs.setString(profileImageKey, imagePath);
+
+    final appDocDir = await getApplicationDocumentsDirectory();
+    final localPath = '${appDocDir.path}/$profileImageKey.jpg';
+    final imageFile = File(imagePath);
+    await imageFile.copy(localPath);
   }
 
   Future<void> _saveUserData() async {
@@ -90,23 +120,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         actions: [
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: CircleAvatar(
               backgroundColor: Colors.black,
               child: ClipOval(
-                child: selectedImagePath != null
-                    ? Image.file(
-                  File(selectedImagePath!),
-                  height: 40,
-                  width: 40,
-                  fit: BoxFit.cover,
-                )
-                    : Image.asset(
-                  AppImages.profile,
-                  fit: BoxFit.cover,
-                  height: 40,
-                  width: 40,
-                ),
+                  child: selectedImagePath != null
+                      ? Image.file(
+                    File(selectedImagePath!),
+                    height: 40,
+                    width: 40,
+                    fit: BoxFit.cover,
+                  )
+                      : Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50)
+                    ),
+                    height: 40,
+                    width: 40,
+                  )
               ),
             ),
           ),
@@ -119,8 +150,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Row(
               children: [
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 16.0),
-                  padding: EdgeInsets.all(3.0),
+                  margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                  padding: const EdgeInsets.all(3.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
                     color: selectedImagePath == null
@@ -143,7 +174,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         onTap: () {
                           showCameraAndGalleryDialog(context, (imagePath) {
                             if (imagePath != null) {
-                              _saveProfileImage(imagePath);
+                              saveProfileImage(imagePath);
                               setState(() {
                                 selectedImagePath = imagePath;
                               });
@@ -151,9 +182,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           });
                         },
                         child: Container(
-                          margin: EdgeInsets.only(left: 18.0, top: 16),
-                          padding: EdgeInsets.all(10.0),
-                          child: Icon(
+                          margin: const EdgeInsets.only(left: 18.0, top: 16,right: 18.0),
+                          padding: const EdgeInsets.all(10.0),
+                          child: const Icon(
                             CupertinoIcons.camera,
                             color: Colors.white,
                           ),
@@ -165,15 +196,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onTap: () {
                       showCameraAndGalleryDialog(context, (imagePath) {
                         if (imagePath != null) {
-                          _saveProfileImage(imagePath);
+                          saveProfileImage(imagePath);
                           setState(() {
                             selectedImagePath = imagePath;
                           });
                         }
                       });
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.all(26.0),
+                    child: const Padding(
+                      padding: EdgeInsets.all(26.0),
                       child: Icon(
                         CupertinoIcons.camera,
                         color: Colors.white,
@@ -186,7 +217,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Text(
                       username ?? "User",
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontFamily: 'Sora',
                         fontSize: 20,
@@ -194,13 +225,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     Text(
                       phoneNumber ?? "+(998) __ ___ __ __",
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontFamily: 'Sora',
                         fontSize: 16,
                       ),
                     ),
-                    Text(
+                    const Text(
                       'Online',
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
@@ -216,11 +247,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onPressed: () {
                 _saveUserData();
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
 
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 50.0),
+              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 50.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 color: Colors.grey.shade300,
@@ -240,7 +271,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         });
                       },
                     ),
-                    SizedBox(height: 10.0),
+                    const SizedBox(height: 10.0),
                     GlobalTextField(
                       hintText: 'Phone number',
                       keyboardType: TextInputType.phone,
@@ -264,33 +295,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     return AlertDialog(
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       shape: ShapeBorder.lerp(
-                        const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(16),
-                          )
-                        ),
-                        const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(16),
-                          )
-                        ),
-                        0.5
+                          const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(16),
+                              )
+                          ),
+                          const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(16),
+                              )
+                          ),
+                          0.5
                       ),
-                      title: Text('Log Out',style: TextStyle(color: Colors.black,fontFamily: 'Sora',fontSize: 20,fontWeight: FontWeight.w600),),
-                      content: Text('Are you sure you want to log out?'),
+                      title: const Text('Log Out',style: TextStyle(color: Colors.black,fontFamily: 'Sora',fontSize: 20,fontWeight: FontWeight.w600),),
+                      content: const Text('Are you sure you want to log out?'),
                       actions: [
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          child: Text('No',style: TextStyle(color: Colors.black,fontFamily: 'Sora'),),
+                          child: const Text('No',style: TextStyle(color: Colors.black,fontFamily: 'Sora'),),
                         ),
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).pop();
                             _clearUserData();
                           },
-                          child: Text('Yes',style: TextStyle(color: Colors.red,fontFamily: 'Sora'),),
+                          child: const Text('Yes',style: TextStyle(color: Colors.red,fontFamily: 'Sora'),),
                         ),
                       ],
                     );
@@ -298,21 +329,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 );
               },
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
-                margin: EdgeInsets.symmetric(horizontal: 16.0),
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                margin: const EdgeInsets.symmetric(horizontal: 16.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
                   color: Colors.red,
                 ),
-                child: Center(
+                child: const Center(
                   child: Text(
-                    'Log out',
+                    'Delete user data!',
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 200,),
+            const SizedBox(height: 200,),
           ],
         ),
       ),

@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pizza/presentation/ui/tab_box/tab_box.dart';
 import 'package:pizza/utils/icons.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key});
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -21,13 +20,14 @@ class _SplashScreenState extends State<SplashScreen> {
 
     Future<void> simulateDownloadProgress() async {
       while (downloadProgress < maxProgress) {
-        await Future.delayed(Duration(milliseconds: 100));
+        await Future.delayed(const Duration(milliseconds: 100));
         setState(() {
           downloadProgress += 0.1;
         });
       }
 
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => TabBox()));
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const TabBox()));
     }
 
     simulateDownloadProgress();
@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
               value: downloadProgress,
               minHeight: 10,
               backgroundColor: Colors.white24,
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
             ),
           ),
         ],
