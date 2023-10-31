@@ -25,7 +25,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           key: _formKey,
           child: Column(
             children: [
-              SizedBox(height: 80),
+              SizedBox(height: 100),
               Center(
                   child: Text(
                 'Doni Pizza',
@@ -151,6 +151,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
               ),
+              SizedBox(height: 100,)
             ],
           ),
         ),

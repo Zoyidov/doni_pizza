@@ -7,6 +7,7 @@ class AppImages{
   static const String dessert = 'assets/images/dessert.png';
   static const String doni = 'assets/images/doni.png';
   static const String splashj = 'assets/images/splash.JPG';
+  static const String login = 'assets/images/svg.png';
 
   //svg
   static const String search = 'assets/svg/search.svg';
