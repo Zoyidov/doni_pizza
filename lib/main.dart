@@ -13,7 +13,7 @@ import 'data/database/orders_database.dart';
 
 void main() async {
   runApp(const MyApp());
-  Fluttertoast.showToast(msg: "App initialized");
+  // Fluttertoast.showToast(msg: "App initialized");
   await OrderDatabase.instance.initDatabase();
 }
 

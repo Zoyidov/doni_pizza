@@ -25,8 +25,8 @@ class _LoginScreenState extends State<LoginScreen> {
           key: _formKey,
           child: Column(
             children: [
-              SizedBox(height: 100),
-              Center(
+              const SizedBox(height: 100),
+              const Center(
                   child: Text(
                 'Doni Pizza',
                 style: TextStyle(
@@ -41,8 +41,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: MediaQuery.of(context).size.width/1.2,
                 fit: BoxFit.fill,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
+              const Padding(
+                padding: EdgeInsets.symmetric(
                     horizontal: 16.0, vertical: 20.0),
                 child: Text(
                   'Ilova orqali buyurtma berish uchun shaxsiy Accountingizga kiring 👇🏻',
@@ -80,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 20.0),
+                      margin: const EdgeInsets.only(top: 20.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(color: Colors.grey),
@@ -91,11 +91,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (_formKey.currentState!.validate()) {
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
-                                    builder: (context) => TabBox()));
+                                    builder: (context) => const TabBox()));
                           }
                         },
-                        child: Padding(
-                            padding: const EdgeInsets.all(10.0),
+                        child: const Padding(
+                            padding: EdgeInsets.all(10.0),
                             child: Center(
                               child: Text(
                                 'Kirish',
@@ -126,10 +126,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SvgPicture.asset(AppImages.google),
-                        SizedBox(
+                        const SizedBox(
                           width: 10.0,
                         ),
-                        Text('Google bilan davom ettirish!'),
+                        const Text('Google bilan davom ettirish!'),
                       ],
                     ),
                   ),
@@ -140,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16.0),
+                    margin: const EdgeInsets.symmetric(horizontal: 16.0),
                     height: 1,
                     color: Colors.grey.withOpacity(0.3),
                     width: MediaQuery.of(context).size.width / 3,
@@ -157,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(
+                    margin: const EdgeInsets.symmetric(
                       horizontal: 16.0,
                     ),
                     height: 1,
@@ -169,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
               RichText(
                 text: TextSpan(
                   children: [
-                    TextSpan(
+                    const TextSpan(
                       text: 'Accountingiz mavjud emasmi?',
                       style: TextStyle(
                           color: Colors.black,
@@ -178,7 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     TextSpan(
                       text: ' Ro\'yxatdan o\'ting',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.red,
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -190,13 +190,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => RegisterScreen()));
+                                  builder: (context) => const RegisterScreen()));
                         },
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 100,)
+              const SizedBox(height: 100,)
             ],
           ),
         ),

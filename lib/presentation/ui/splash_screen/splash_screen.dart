@@ -21,13 +21,13 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 3),
+      duration: const Duration(seconds: 4),
     );
 
     _animation = Tween<Offset>(
-      begin: Offset(4, -4),
-      end: Offset(0, -6),
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.bounceIn));
+      begin: const Offset(1, -3),
+      end: const Offset(0, -6),
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.fastEaseInToSlowEaseOut));
 
     _controller.forward();
 
@@ -49,7 +49,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     return Scaffold(
       body: Stack(
         children: [
-          // Background Image
           Image.asset(
             AppImages.splashj,
             fit: BoxFit.cover,
@@ -59,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           Center(
             child: SlideTransition(
               position: _animation,
-              child: Text(
+              child: const Text(
                 "Bomisilar eee 😅",
                 style: TextStyle(
                   color: Colors.red,
@@ -76,7 +75,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                   ],
                 ),
               ),
-
             ),
           ),
         ],

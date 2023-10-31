@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pizza/presentation/widgets/global_textfield.dart';
@@ -25,8 +24,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           key: _formKey,
           child: Column(
             children: [
-              SizedBox(height: 100),
-              Center(
+              const SizedBox(height: 100),
+              const Center(
                   child: Text(
                 'Doni Pizza',
                 style: TextStyle(
@@ -35,8 +34,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     fontWeight: FontWeight.bold,
                     fontSize: 30),
               )),
-              Padding(
-                padding: const EdgeInsets.symmetric(
+              const Padding(
+                padding: EdgeInsets.symmetric(
                     horizontal: 16.0, vertical: 20.0),
                 child: Text(
                   'Ilova orqali buyurtma berish uchun ro\'yxatdan o\'ting 👇🏻',
@@ -98,7 +97,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       max: 1,
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 20.0),
+                      margin: const EdgeInsets.only(top: 20.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(color: Colors.grey),
@@ -107,11 +106,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         borderRadius: BorderRadius.circular(16.0),
                         onTap: () {
                           if (_formKey.currentState!.validate()) {
-                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => TabBox()));
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const TabBox()));
                           }
                         },
-                        child: Padding(
-                            padding: const EdgeInsets.all(10.0),
+                        child: const Padding(
+                            padding: EdgeInsets.all(10.0),
                             child: Center(
                               child: Text(
                                 'Ro\'yxatdan o\'tish',
@@ -142,16 +141,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SvgPicture.asset(AppImages.google),
-                        SizedBox(
+                        const SizedBox(
                           width: 10.0,
                         ),
-                        Text('Google bilan davom ettirish!'),
+                        const Text('Google bilan davom ettirish!'),
                       ],
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 100,)
+              const SizedBox(height: 100,)
             ],
           ),
         ),

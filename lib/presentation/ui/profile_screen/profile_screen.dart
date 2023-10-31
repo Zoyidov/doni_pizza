@@ -113,127 +113,81 @@ class _ProfileScreenState extends State<ProfileScreen> {
             fontSize: 30,
           ),
         ),
-        actions: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: CircleAvatar(
-              backgroundColor: Colors.grey.shade400,
-              child: ClipOval(
-                  child: selectedImagePath != null
-                      ? Image.file(
-                          File(selectedImagePath!),
-                          height: 40,
-                          width: 40,
-                          fit: BoxFit.cover,
-                        )
-                      : Icon(Icons.person, color: Colors.black)),
-            ),
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
-              children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                  padding: const EdgeInsets.all(3.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: selectedImagePath == null ? Colors.grey.shade400 : Colors.black,
-                  ),
-                  child: selectedImagePath != null
-                      ? Stack(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(100),
-                              child: Image.file(
-                                File(selectedImagePath!),
-                                height: 80,
-                                width: 80,
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                            ZoomTapAnimation(
-                              onTap: () {
-                                showCameraAndGalleryDialog(context, (imagePath) {
-                                  if (imagePath != null) {
-                                    saveProfileImage(imagePath);
-                                    setState(() {
-                                      selectedImagePath = imagePath;
-                                    });
-                                  }
-                                });
-                              },
-                              child: Container(
-                                margin: const EdgeInsets.only(left: 18.0, top: 16, right: 18.0),
-                                padding: const EdgeInsets.all(10.0),
-                                child: const Icon(
-                                  CupertinoIcons.camera,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                      : ZoomTapAnimation(
-                          onTap: () {
-                            showCameraAndGalleryDialog(context, (imagePath) {
-                              if (imagePath != null) {
-                                saveProfileImage(imagePath);
-                                setState(() {
-                                  selectedImagePath = imagePath;
-                                });
-                              }
-                            });
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.all(26.0),
-                            child: Icon(
-                              CupertinoIcons.camera,
-                              color: Colors.white,
+            ZoomTapAnimation(
+              onTap: () {
+                showCameraAndGalleryDialog(context, (imagePath) {
+                  if (imagePath != null) {
+                    saveProfileImage(imagePath);
+                    setState(() {
+                      selectedImagePath = imagePath;
+                    });
+                  }
+                });
+              },
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: const EdgeInsets.all(3.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  color: selectedImagePath == null ? Colors.grey.shade400 : Colors.black,
+                ),
+                child: selectedImagePath != null
+                    ? Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Image.file(
+                              File(selectedImagePath!),
+                              height: 100,
+                              width: 100,
+                              fit: BoxFit.fill,
                             ),
                           ),
-                        ),
+                        ],
+                      )
+                    : const Padding(
+                      padding: EdgeInsets.all(40.0),
+                      child: Icon(
+                        CupertinoIcons.camera,
+                        color: Colors.white,
+                      ),
+                    ),
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  username ?? "User",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Sora',
+                    fontSize: 20,
+                  ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      username ?? "User",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Sora',
-                        fontSize: 20,
-                      ),
-                    ),
-                    Text(
-                      phoneNumber ?? "+(998) __ ___ __ __",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Sora',
-                        fontSize: 16,
-                      ),
-                    ),
-                    const Text(
-                      'Online',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'Sora',
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
+                Text(
+                  phoneNumber ?? "+(998) __ ___ __ __",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Sora',
+                    fontSize: 16,
+                  ),
+                ),
+                const Text(
+                  'Online',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontFamily: 'Sora',
+                    color: Colors.blue,
+                    fontSize: 16,
+                  ),
                 ),
               ],
-            ),
-            TextButton(
-              onPressed: () {
-                _saveUserData();
-              },
-              child: const Text('Save'),
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 50.0),
