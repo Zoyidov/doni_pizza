@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pizza/business_logic/bloc/order_bloc.dart';
+import 'package:pizza/business_logic/bloc/state_bloc.dart';
 import 'package:pizza/utils/icons.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
-import '../../../data/bloc/order_bloc.dart';
-import '../../../data/bloc/state_bloc.dart';
 import '../../../data/database/food_database.dart';
 import '../../../data/model/food_model.dart';
 import '../../../data/model/order_model.dart';
@@ -29,8 +29,7 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Future<void> fetchFoodItems() async {
-    final List<FoodModel> items =
-        await LocalDatabase.instance.fetchAllFoodItems();
+    final List<FoodModel> items = await LocalDatabase.instance.fetchAllFoodItems();
     setState(() {
       foodItems = items;
     });
@@ -68,7 +67,6 @@ class _CartScreenState extends State<CartScreen> {
     final orderDate = DateTime.now();
 
     final foodNames = foodItems.map((item) => item.name).join(', ');
-
 
     final order = OrderModel(
       foodNames: foodNames,
@@ -127,11 +125,13 @@ class _CartScreenState extends State<CartScreen> {
         ),
         actions: [
           ZoomTapAnimation(
-            onTap: (){
+            onTap: () {
               context.read<FoodBloc>().add(DeleteFoods());
             },
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0,),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10.0,
+              ),
               child: const Center(
                 child: Text(
                   'Clear',
@@ -174,8 +174,7 @@ class _CartScreenState extends State<CartScreen> {
                                 return Dismissible(
                                   key: Key(item.name),
                                   background: Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        vertical: 5.0),
+                                    margin: const EdgeInsets.symmetric(vertical: 5.0),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
                                       color: Colors.red,
@@ -193,13 +192,10 @@ class _CartScreenState extends State<CartScreen> {
                                   ),
                                   direction: DismissDirection.endToStart,
                                   onDismissed: (direction) async {
-                                    context
-                                        .read<FoodBloc>()
-                                        .add(DeleteFood(item));
+                                    context.read<FoodBloc>().add(DeleteFood(item));
                                   },
                                   child: Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        vertical: 5.0),
+                                    margin: const EdgeInsets.symmetric(vertical: 5.0),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
                                       color: Colors.black.withOpacity(0.1),
@@ -213,16 +209,14 @@ class _CartScreenState extends State<CartScreen> {
                                       title: Text(
                                         item.name,
                                         style: const TextStyle(
-                                            color: Colors.black,
-                                            fontFamily: 'Sora'),
+                                            color: Colors.black, fontFamily: 'Sora'),
                                       ),
                                       subtitle: Row(
                                         children: [
                                           Text(
                                             '\$${item.price}',
                                             style: const TextStyle(
-                                                color: Colors.black,
-                                                fontFamily: 'Sora'),
+                                                color: Colors.black, fontFamily: 'Sora'),
                                           ),
                                           const SizedBox(width: 12),
                                           Row(
@@ -264,7 +258,7 @@ class _CartScreenState extends State<CartScreen> {
                     foodItems.isNotEmpty
                         ? showLottie
                             ? Padding(
-                                padding: const EdgeInsets.only(bottom: 130.0,top: 5.0),
+                                padding: const EdgeInsets.only(bottom: 130.0, top: 5.0),
                                 child: ZoomTapAnimation(
                                   onTap: _showLottieAndDeleteItems,
                                   child: Container(
@@ -274,8 +268,7 @@ class _CartScreenState extends State<CartScreen> {
                                       color: Colors.black,
                                     ),
                                     child: const Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 15.0),
+                                      padding: EdgeInsets.symmetric(vertical: 15.0),
                                       child: Center(
                                           child: CupertinoActivityIndicator(
                                         color: Colors.white,
@@ -285,7 +278,7 @@ class _CartScreenState extends State<CartScreen> {
                                 ),
                               )
                             : Padding(
-                                padding: const EdgeInsets.only(bottom: 130.0,top: 5.0),
+                                padding: const EdgeInsets.only(bottom: 130.0, top: 5.0),
                                 child: ZoomTapAnimation(
                                   onTap: _showLottieAndDeleteItems,
                                   child: Container(
@@ -295,8 +288,7 @@ class _CartScreenState extends State<CartScreen> {
                                       color: Colors.black,
                                     ),
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 15.0),
+                                      padding: const EdgeInsets.symmetric(vertical: 15.0),
                                       child: Center(
                                         child: Text(
                                           "Order Now   / \$${calculateTotalPrice(foodItems).toStringAsFixed(2)}",

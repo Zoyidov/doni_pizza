@@ -1,9 +1,7 @@
 // ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
 import 'package:pizza/data/database/orders_database.dart';
-
-import '../model/order_model.dart';
-
+import 'package:pizza/data/model/order_model.dart';
 
 // Events
 abstract class OrderEvent {}
@@ -50,7 +48,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     on<LoadOrdersEvent>(_handleLoadOrdersEvent);
     on<AddOrderEvent>(_handleAddOrderEvent);
     on<ClearOrdersEvent>(_handleClearOrdersEvent);
-
   }
 
   void _handleLoadOrdersEvent(LoadOrdersEvent event, Emitter<OrderState> emit) async {
@@ -84,5 +81,4 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       emit(OrderErrorState('Failed to clear orders: $e'));
     }
   }
-
 }

@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:pizza/widgets/global_textfield.dart';
+import 'package:pizza/presentation/widgets/dialog_gallery_camera.dart';
+import 'package:pizza/presentation/widgets/global_textfield.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
-import '../../../widgets/dialog_gallery_camera.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -47,7 +47,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-
   Future<void> _loadUserData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     username = prefs.getString(usernameKey) ?? "User";
@@ -56,23 +55,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final String? imagePath = prefs.getString(profileImageKey);
     if (imagePath != null) {
       try {
-
         final file = File(imagePath);
         if (file.existsSync()) {
-          final extractedPath = imagePath.substring(imagePath.indexOf("/private/var/mobile/Containers/Data/Application/"));
+          final extractedPath = imagePath
+              .substring(imagePath.indexOf("/private/var/mobile/Containers/Data/Application/"));
           selectedImagePath = extractedPath;
-        } else {
-        }
-      // ignore: empty_catches
-      } catch (e) {
-      }
+        } else {}
+        // ignore: empty_catches
+      } catch (e) {}
     }
 
     setState(() {});
   }
-
-
-
 
   Future<void> saveProfileImage(String imagePath) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -126,19 +120,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: ClipOval(
                   child: selectedImagePath != null
                       ? Image.file(
-                    File(selectedImagePath!),
-                    height: 40,
-                    width: 40,
-                    fit: BoxFit.cover,
-                  )
+                          File(selectedImagePath!),
+                          height: 40,
+                          width: 40,
+                          fit: BoxFit.cover,
+                        )
                       : Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50)
-                    ),
-                    height: 40,
-                    width: 40,
-                  )
-              ),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(50)),
+                          height: 40,
+                          width: 40,
+                        )),
             ),
           ),
         ],
@@ -154,63 +145,61 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   padding: const EdgeInsets.all(3.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
-                    color: selectedImagePath == null
-                        ? Colors.grey.shade400
-                        : Colors.black,
+                    color: selectedImagePath == null ? Colors.grey.shade400 : Colors.black,
                   ),
                   child: selectedImagePath != null
                       ? Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: Image.file(
-                          File(selectedImagePath!),
-                          height: 80,
-                          width: 80,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                      ZoomTapAnimation(
-                        onTap: () {
-                          showCameraAndGalleryDialog(context, (imagePath) {
-                            if (imagePath != null) {
-                              saveProfileImage(imagePath);
-                              setState(() {
-                                selectedImagePath = imagePath;
-                              });
-                            }
-                          });
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.only(left: 18.0, top: 16,right: 18.0),
-                          padding: const EdgeInsets.all(10.0),
-                          child: const Icon(
-                            CupertinoIcons.camera,
-                            color: Colors.white,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: Image.file(
+                                File(selectedImagePath!),
+                                height: 80,
+                                width: 80,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            ZoomTapAnimation(
+                              onTap: () {
+                                showCameraAndGalleryDialog(context, (imagePath) {
+                                  if (imagePath != null) {
+                                    saveProfileImage(imagePath);
+                                    setState(() {
+                                      selectedImagePath = imagePath;
+                                    });
+                                  }
+                                });
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.only(left: 18.0, top: 16, right: 18.0),
+                                padding: const EdgeInsets.all(10.0),
+                                child: const Icon(
+                                  CupertinoIcons.camera,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : ZoomTapAnimation(
+                          onTap: () {
+                            showCameraAndGalleryDialog(context, (imagePath) {
+                              if (imagePath != null) {
+                                saveProfileImage(imagePath);
+                                setState(() {
+                                  selectedImagePath = imagePath;
+                                });
+                              }
+                            });
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.all(26.0),
+                            child: Icon(
+                              CupertinoIcons.camera,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  )
-                      : ZoomTapAnimation(
-                    onTap: () {
-                      showCameraAndGalleryDialog(context, (imagePath) {
-                        if (imagePath != null) {
-                          saveProfileImage(imagePath);
-                          setState(() {
-                            selectedImagePath = imagePath;
-                          });
-                        }
-                      });
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.all(26.0),
-                      child: Icon(
-                        CupertinoIcons.camera,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -249,7 +238,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               },
               child: const Text('Save'),
             ),
-
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 50.0),
               decoration: BoxDecoration(
@@ -297,31 +285,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       shape: ShapeBorder.lerp(
                           const RoundedRectangleBorder(
                               borderRadius: BorderRadius.all(
-                                Radius.circular(16),
-                              )
-                          ),
+                            Radius.circular(16),
+                          )),
                           const RoundedRectangleBorder(
                               borderRadius: BorderRadius.all(
-                                Radius.circular(16),
-                              )
-                          ),
-                          0.5
+                            Radius.circular(16),
+                          )),
+                          0.5),
+                      title: const Text(
+                        'Log Out',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: 'Sora',
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600),
                       ),
-                      title: const Text('Log Out',style: TextStyle(color: Colors.black,fontFamily: 'Sora',fontSize: 20,fontWeight: FontWeight.w600),),
                       content: const Text('Are you sure you want to log out?'),
                       actions: [
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          child: const Text('No',style: TextStyle(color: Colors.black,fontFamily: 'Sora'),),
+                          child: const Text(
+                            'No',
+                            style: TextStyle(color: Colors.black, fontFamily: 'Sora'),
+                          ),
                         ),
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).pop();
                             _clearUserData();
                           },
-                          child: const Text('Yes',style: TextStyle(color: Colors.red,fontFamily: 'Sora'),),
+                          child: const Text(
+                            'Yes',
+                            style: TextStyle(color: Colors.red, fontFamily: 'Sora'),
+                          ),
                         ),
                       ],
                     );
@@ -343,7 +341,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 200,),
+            const SizedBox(
+              height: 200,
+            ),
           ],
         ),
       ),

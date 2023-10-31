@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pizza/data/bloc/state_bloc.dart';
+import 'package:pizza/business_logic/bloc/state_bloc.dart';
 import 'package:pizza/data/model/food_model.dart';
 import 'package:pizza/presentation/ui/home_screen/promotions/promotions.dart';
+import 'package:pizza/presentation/widgets/global_textfield.dart';
 import 'package:pizza/utils/icons.dart';
-import 'package:pizza/widgets/global_textfield.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../data/model/item_model.dart';
 import '../detail_screen/detail_screen.dart';
@@ -165,15 +165,13 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-
   void updateCategory(String category) {
     setState(() {
       selectedCategory = category;
       if (category == 'All') {
         filteredFoods = allMenuItems;
       } else {
-        filteredFoods =
-            allMenuItems.where((item) => item.category == category).toList();
+        filteredFoods = allMenuItems.where((item) => item.category == category).toList();
       }
     });
   }
@@ -300,8 +298,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      ProductDetailScreen(item: item),
+                                  builder: (context) => ProductDetailScreen(item: item),
                                 ),
                               );
                             },
@@ -322,8 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           const SizedBox(height: 10),
                           Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 6.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 6.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -338,8 +334,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 const SizedBox(height: 20),
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
                                       padding: const EdgeInsets.all(5),
@@ -349,21 +344,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       child: Text(
                                         '\$ ${item.price.toStringAsFixed(2)}',
-                                        style: const TextStyle(
-                                            color: Colors.white),
+                                        style: const TextStyle(color: Colors.white),
                                       ),
                                     ),
                                     ZoomTapAnimation(
                                       onTap: () {
-                                        context.read<FoodBloc>().add(
-                                          AddFoodEvent(FoodModel(
-                                            name: item.name,
-                                            description: item.description,
-                                            imagePath: item.imagePath,
-                                            price: item.price,
-                                            count: item.count,
-                                          ))
-                                        );
+                                        context.read<FoodBloc>().add(AddFoodEvent(FoodModel(
+                                              name: item.name,
+                                              description: item.description,
+                                              imagePath: item.imagePath,
+                                              price: item.price,
+                                              count: item.count,
+                                            )));
                                         Fluttertoast.showToast(
                                           msg: 'Successfully added to cart!',
                                           toastLength: Toast.LENGTH_SHORT,
@@ -376,8 +368,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Container(
                                         padding: const EdgeInsets.all(2),
                                         decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
+                                          borderRadius: BorderRadius.circular(12),
                                           color: Colors.red,
                                         ),
                                         child: const Icon(Icons.add),

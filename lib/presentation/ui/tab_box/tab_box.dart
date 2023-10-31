@@ -3,11 +3,11 @@
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pizza/business_logic/cubit/tab_cubit.dart';
 import 'package:pizza/presentation/ui/cart_screen/cart_screen.dart';
 import 'package:pizza/presentation/ui/home_screen/home_screen.dart';
 import 'package:pizza/presentation/ui/orders/orders_screen.dart';
 import 'package:pizza/presentation/ui/profile_screen/profile_screen.dart';
-import '../../../data/cubit/tab_cubit.dart';
 import '../../../data/database/food_database.dart';
 
 class TabBox extends StatefulWidget {
@@ -63,21 +63,21 @@ class _TabBoxState extends State<TabBox> {
             icon: isDatabaseEmpty
                 ? const Icon(Icons.shopping_cart)
                 : Stack(
-              children: [
-                const Icon(Icons.shopping_cart),
-                Positioned(
-                  right: 0,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      color: Colors.red,
-                    ),
-                    height: 10,
-                    width: 10,
+                    children: [
+                      const Icon(Icons.shopping_cart),
+                      Positioned(
+                        right: 0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: Colors.red,
+                          ),
+                          height: 10,
+                          width: 10,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
             selectedColor: Colors.black,
           ),
           DotNavigationBarItem(

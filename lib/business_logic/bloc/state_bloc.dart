@@ -1,8 +1,8 @@
 // ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
+import 'package:pizza/data/model/food_model.dart';
 
-import '../database/food_database.dart';
-import '../model/food_model.dart';
+import '../../data/database/food_database.dart';
 
 // Events
 abstract class FoodEvent {}
@@ -25,7 +25,6 @@ class DeleteFoods extends FoodEvent {
   DeleteFoods();
 }
 
-
 class DeleteFood extends FoodEvent {
   final FoodModel food;
 
@@ -44,7 +43,6 @@ class UpdateTotalCostEvent extends FoodEvent {
 
   UpdateTotalCostEvent(this.newTotalCost);
 }
-
 
 class IncrementCountEvent extends FoodEvent {
   final FoodModel food;
@@ -95,9 +93,9 @@ class FoodBloc extends Bloc<FoodEvent, FoodState> {
   }
 
   void updateTotalValue() {
-    totalValue = foodItems.fold(0.0, (previousValue, item) => previousValue + item.price * item.count);
+    totalValue =
+        foodItems.fold(0.0, (previousValue, item) => previousValue + item.price * item.count);
   }
-
 
   void _handleLoadTodosEvent(LoadTodosEvent event, Emitter<FoodState> emit) async {
     emit(FoodLoadingState());

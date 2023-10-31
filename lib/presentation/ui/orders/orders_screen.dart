@@ -2,9 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pizza/business_logic/bloc/order_bloc.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
-
-import '../../../data/bloc/order_bloc.dart';
 
 class OrdersScreen extends StatefulWidget {
   const OrdersScreen({super.key});
@@ -39,11 +38,13 @@ class _OrdersScreenState extends State<OrdersScreen> {
         ),
         actions: [
           ZoomTapAnimation(
-            onTap: (){
+            onTap: () {
               context.read<OrderBloc>().add(ClearOrdersEvent());
             },
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0,),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10.0,
+              ),
               child: const Center(
                 child: Text(
                   'Clear',
@@ -65,49 +66,56 @@ class _OrdersScreenState extends State<OrdersScreen> {
             return const Center(child: CircularProgressIndicator());
           } else if (state is OrderLoadedState) {
             final orders = state.orders;
-            return orders.isEmpty? const Center(child: Icon(CupertinoIcons.news, size: 100,color: Colors.black,)):ListView.separated(
-              physics: const BouncingScrollPhysics(),
-              itemCount: orders.length,
-              separatorBuilder: (context, index) {
-                return const Divider(
-                  height: 1,
-                  color: Colors.black,
-                );
-              },
-              itemBuilder: (context, index) {
-                final order = orders[index];
-                final timestamp = DateTime.parse(order.timestamp);
-                final formattedTimestamp = DateFormat('yyyy-MM-dd HH:mm').format(timestamp);
-                return ListTile(
-                  title: Text(
-                    order.foodNames,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Sora',
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  trailing: Text(
-                    '\$${order.totalCost.toStringAsFixed(2)}',
-                    style: const TextStyle(
-                      color: Colors.indigo,
-                      fontFamily: 'Sora',
-                    ),
-                  ),
-                  subtitle: Row(
-                    children: [
-                      Text(
-                        'Ordered at: $formattedTimestamp',
-                        style: const TextStyle(
-                          color: Colors.grey,
-                          fontFamily: 'Sora',
+            return orders.isEmpty
+                ? const Center(
+                    child: Icon(
+                    CupertinoIcons.news,
+                    size: 100,
+                    color: Colors.black,
+                  ))
+                : ListView.separated(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: orders.length,
+                    separatorBuilder: (context, index) {
+                      return const Divider(
+                        height: 1,
+                        color: Colors.black,
+                      );
+                    },
+                    itemBuilder: (context, index) {
+                      final order = orders[index];
+                      final timestamp = DateTime.parse(order.timestamp);
+                      final formattedTimestamp = DateFormat('yyyy-MM-dd HH:mm').format(timestamp);
+                      return ListTile(
+                        title: Text(
+                          order.foodNames,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontFamily: 'Sora',
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            );
+                        trailing: Text(
+                          '\$${order.totalCost.toStringAsFixed(2)}',
+                          style: const TextStyle(
+                            color: Colors.indigo,
+                            fontFamily: 'Sora',
+                          ),
+                        ),
+                        subtitle: Row(
+                          children: [
+                            Text(
+                              'Ordered at: $formattedTimestamp',
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontFamily: 'Sora',
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
           } else if (state is OrderErrorState) {
             return Center(child: Text('Error: ${state.errorMessage}'));
           } else {
