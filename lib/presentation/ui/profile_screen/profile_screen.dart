@@ -116,7 +116,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: CircleAvatar(
-              backgroundColor: Colors.black,
+              backgroundColor: Colors.grey.shade400,
               child: ClipOval(
                   child: selectedImagePath != null
                       ? Image.file(
@@ -125,11 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           width: 40,
                           fit: BoxFit.cover,
                         )
-                      : Container(
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(50)),
-                          height: 40,
-                          width: 40,
-                        )),
+                      : Icon(Icons.person, color: Colors.black)),
             ),
           ),
         ],

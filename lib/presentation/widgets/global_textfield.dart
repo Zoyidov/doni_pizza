@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-
 class GlobalTextField extends StatefulWidget {
   final String hintText;
   final TextInputType keyboardType;
@@ -56,7 +55,7 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
       children: [
         if (widget.caption.isNotEmpty)
           Padding(
-            padding: const EdgeInsets.only(top: 4.0),
+            padding: const EdgeInsets.only(top: 5.0),
             child: Text(
               widget.caption,
               style: const TextStyle(
@@ -84,11 +83,10 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
             helperText: widget.helperText,
             hintText: widget.hintText,
             hintStyle: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: Colors.grey,
-              fontFamily: 'Sora'
-            ),
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: Colors.grey,
+                fontFamily: 'Sora'),
             prefixIcon: widget.prefixIcon != null
                 ? Icon(
                     widget.prefixIcon,
@@ -138,7 +136,17 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
           obscureText: widget.keyboardType == TextInputType.visiblePassword
               ? !_isPasswordVisible
               : false,
-          validator: widget.validator,
+          validator: (value) {
+            if (widget.keyboardType == TextInputType.phone) {
+              if (value != null && value.length < 19) {
+                return 'Telefon raqam xato kiritildi!';
+              }
+            }
+            if (widget.validator != null) {
+              return widget.validator!(value);
+            }
+            return null;
+          },
         ),
       ],
     );

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pizza/presentation/ui/tab_box/tab_box.dart';
 import 'package:pizza/utils/icons.dart';
 
+import '../auth_screen/login_screen.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -31,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => TabBox()));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
       }
     });
   }

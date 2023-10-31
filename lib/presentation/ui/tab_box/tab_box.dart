@@ -60,28 +60,17 @@ class _TabBoxState extends State<TabBox> {
             selectedColor: Colors.black,
           ),
           DotNavigationBarItem(
-            icon: isDatabaseEmpty
-                ? const Icon(Icons.shopping_cart)
-                : Stack(
-                    children: [
-                      const Icon(Icons.shopping_cart),
-                      Positioned(
-                        right: 0,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: Colors.red,
-                          ),
-                          height: 10,
-                          width: 10,
-                        ),
-                      ),
-                    ],
-                  ),
+            icon: Badge(
+              label: Text('7'),
+              child: Icon(Icons.shopping_cart),
+            ),
             selectedColor: Colors.black,
           ),
           DotNavigationBarItem(
-            icon: const Icon(Icons.access_time_outlined),
+            icon: Badge(
+              label: Text('1'),
+              child: Icon(Icons.access_time_outlined),
+            ),
             selectedColor: Colors.black,
           ),
           DotNavigationBarItem(
