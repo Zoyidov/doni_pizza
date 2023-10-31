@@ -15,9 +15,9 @@ import 'data/database/orders_database.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
   runApp(const MyApp());
   // Fluttertoast.showToast(msg: "App initialized");
   await OrderDatabase.instance.initDatabase();

@@ -31,7 +31,6 @@ dependencies:
 
   badges: ^3.1.2
   google_sign_in: ^6.1.5
-#  cloud_firestore: ^4.12.1
   cloud_firestore: ^4.12.1
   firebase_core: ^2.20.0
 
