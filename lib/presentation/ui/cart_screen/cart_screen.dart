@@ -110,6 +110,7 @@ class _CartScreenState extends State<CartScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         centerTitle: false,
         elevation: 0,
         scrolledUnderElevation: 0,

@@ -25,6 +25,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
+        automaticallyImplyLeading: false,
         centerTitle: false,
         backgroundColor: Colors.white,
         title: const Text(
