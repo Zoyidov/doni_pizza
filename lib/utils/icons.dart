@@ -11,12 +11,10 @@ class AppImages{
   //svg
   static const String search = 'assets/svg/search.svg';
   static const String google = 'assets/svg/google.svg';
-  static const String facebook = 'assets/svg/facebook.svg';
 
 
   //lottie
   static const String empty = 'assets/images/empty.json';
   static const String splash = "assets/images/splash.json";
-  static const String clock = "assets/images/clock.json";
 
 }
