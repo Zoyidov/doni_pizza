@@ -29,7 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
       price: 4.99,
       category: 'Pizza',
       imagePath: 'assets/images/pizza.png',
-      count: 1,
     ),
     MenuItem(
       name: 'Pepperoni',
@@ -37,7 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
       price: 4.69,
       category: 'Pizza',
       imagePath: 'assets/images/pepperoni.png',
-      count: 1,
     ),
     MenuItem(
       name: 'Pepperoni Cheese',
@@ -45,7 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
       price: 4.44,
       category: 'Pizza',
       imagePath: 'assets/images/cheese_pepperoni.png',
-      count: 1,
     ),
     MenuItem(
       name: 'MushroomPizza',
@@ -53,7 +50,6 @@ class _HomeScreenState extends State<HomeScreen> {
       price: 6.46,
       category: 'Pizza',
       imagePath: 'assets/images/mushroom.png',
-      count: 1,
     ),
     MenuItem(
       name: 'Chicken',
@@ -61,7 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
       price: 6.699,
       category: 'Chicken',
       imagePath: 'assets/images/chicken.png',
-      count: 1,
     ),
     MenuItem(
       name: 'KFC',
@@ -69,7 +64,6 @@ class _HomeScreenState extends State<HomeScreen> {
       price: 3.49,
       category: 'Chicken',
       imagePath: 'assets/images/kfc.png',
-      count: 1,
     ),
     MenuItem(
       name: 'Burger',
@@ -77,7 +71,6 @@ class _HomeScreenState extends State<HomeScreen> {
       price: 3.99,
       category: 'Burger',
       imagePath: 'assets/images/burger.png',
-      count: 1,
     ),
     MenuItem(
       name: 'Beef Burger',
@@ -85,7 +78,6 @@ class _HomeScreenState extends State<HomeScreen> {
       price: 2.49,
       category: 'Burger',
       imagePath: 'assets/images/beef_burger.png',
-      count: 1,
     ),
     MenuItem(
       name: 'Classic Burger',
@@ -93,7 +85,6 @@ class _HomeScreenState extends State<HomeScreen> {
       price: 2.55,
       category: 'Burger',
       imagePath: 'assets/images/classic_burger.png',
-      count: 1,
     ),
     MenuItem(
       name: 'Cheese Burger',
@@ -101,7 +92,6 @@ class _HomeScreenState extends State<HomeScreen> {
       price: 3.5,
       category: 'Burger',
       imagePath: 'assets/images/cheese_burger.png',
-      count: 1,
     ),
     MenuItem(
       name: 'Cobb Salad',
@@ -109,7 +99,6 @@ class _HomeScreenState extends State<HomeScreen> {
       price: 5.49,
       category: 'Salad',
       imagePath: 'assets/images/dessert.png',
-      count: 1,
     ),
     MenuItem(
       name: 'Caesar Salad',
@@ -117,7 +106,6 @@ class _HomeScreenState extends State<HomeScreen> {
       price: 6.59,
       category: 'Salad',
       imagePath: 'assets/images/caesar.png',
-      count: 1,
     ),
     MenuItem(
       name: 'Strawberry',
@@ -125,7 +113,6 @@ class _HomeScreenState extends State<HomeScreen> {
       price: 7.4,
       category: 'Fruits',
       imagePath: 'assets/images/strobery.png',
-      count: 1,
     ),
     MenuItem(
       name: 'Mango',
@@ -133,7 +120,6 @@ class _HomeScreenState extends State<HomeScreen> {
       price: 4.6,
       category: 'Fruits',
       imagePath: 'assets/images/mango.png',
-      count: 1,
     ),
   ];
 

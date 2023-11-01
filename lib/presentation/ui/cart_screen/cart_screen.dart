@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pizza/business_logic/bloc/order_bloc.dart';
@@ -31,7 +32,8 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Future<void> fetchFoodItems() async {
-    final List<FoodModel> items = await LocalDatabase.instance.fetchAllFoodItems();
+    final List<FoodModel> items =
+        await LocalDatabase.instance.fetchAllFoodItems();
     setState(() {
       foodItems = items;
     });
@@ -155,29 +157,41 @@ class _CartScreenState extends State<CartScreen> {
           if (state is TodoInitialState || state is FoodLoadingState) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is FoodErrorState) {
-            return Center(child: Text('${state.errorMessage}'));
+            return Center(child: Text(state.errorMessage));
           } else if (state is FoodLoadedState) {
             List<FoodModel> foodItems = state.foods;
             return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  children: [
-                    foodItems.isEmpty
-                        ? Column(children: [
-                            const SizedBox(height: 50),
-                            Center(child: Lottie.asset(AppImages.empty)),
-                          ])
-                        : Expanded(
+                child: foodItems.isEmpty
+                    ? Center(
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(AppImages.empty_cart),
+                              SizedBox(height: 32.0),
+                              Text(
+                                LocaleKeys.empty_cart.tr(),
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    fontFamily: 'Sora',
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ]),
+                      )
+                    : Column(
+                        children: [
+                          Expanded(
                             child: ListView.builder(
                               physics: const BouncingScrollPhysics(),
-                              scrollDirection: Axis.vertical,
                               itemCount: foodItems.length,
                               itemBuilder: (context, index) {
                                 final item = foodItems[index];
                                 return Dismissible(
                                   key: Key(item.name),
                                   background: Container(
-                                    margin: const EdgeInsets.symmetric(vertical: 5.0),
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 5.0),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
                                       color: Colors.red,
@@ -195,10 +209,13 @@ class _CartScreenState extends State<CartScreen> {
                                   ),
                                   direction: DismissDirection.endToStart,
                                   onDismissed: (direction) async {
-                                    context.read<FoodBloc>().add(DeleteFood(item));
+                                    context
+                                        .read<FoodBloc>()
+                                        .add(DeleteFood(item));
                                   },
                                   child: Container(
-                                    margin: const EdgeInsets.symmetric(vertical: 5.0),
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 5.0),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
                                       color: Colors.black.withOpacity(0.1),
@@ -212,14 +229,16 @@ class _CartScreenState extends State<CartScreen> {
                                       title: Text(
                                         item.name,
                                         style: const TextStyle(
-                                            color: Colors.black, fontFamily: 'Sora'),
+                                            color: Colors.black,
+                                            fontFamily: 'Sora'),
                                       ),
                                       subtitle: Row(
                                         children: [
                                           Text(
                                             '${item.price}${LocaleKeys.usd.tr()}',
                                             style: const TextStyle(
-                                                color: Colors.black, fontFamily: 'Sora'),
+                                                color: Colors.black,
+                                                fontFamily: 'Sora'),
                                           ),
                                           const SizedBox(width: 12),
                                           Row(
@@ -258,58 +277,67 @@ class _CartScreenState extends State<CartScreen> {
                               },
                             ),
                           ),
-                    foodItems.isNotEmpty
-                        ? showLottie
-                            ? Padding(
-                                padding: const EdgeInsets.only(bottom: 130.0, top: 5.0),
-                                child: ZoomTapAnimation(
-                                  onTap: _showLottieAndDeleteItems,
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(16),
-                                      color: Colors.black,
-                                    ),
-                                    child: const Padding(
-                                      padding: EdgeInsets.symmetric(vertical: 15.0),
-                                      child: Center(
-                                          child: CupertinoActivityIndicator(
-                                        color: Colors.white,
-                                      )),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.only(bottom: 130.0, top: 5.0),
-                                child: ZoomTapAnimation(
-                                  onTap: _showLottieAndDeleteItems,
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(16),
-                                      color: Colors.black,
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 15.0),
-                                      child: Center(
-                                        child: Text(
-                                          "${LocaleKeys.order_now.tr()}  /${calculateTotalPrice(foodItems).toStringAsFixed(2)}${LocaleKeys.usd.tr()}",
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: 'Sora',
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 16,
+                          foodItems.isNotEmpty
+                              ? showLottie
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(
+                                          bottom: 130.0, top: 5.0),
+                                      child: ZoomTapAnimation(
+                                        onTap: _showLottieAndDeleteItems,
+                                        child: Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            color: Colors.black,
+                                          ),
+                                          child: const Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 15.0),
+                                            child: Center(
+                                                child:
+                                                    CupertinoActivityIndicator(
+                                              color: Colors.white,
+                                            )),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                        : const SizedBox(),
-                  ],
-                ));
+                                    )
+                                  : Padding(
+                                      padding: const EdgeInsets.only(
+                                          bottom: 130.0, top: 5.0),
+                                      child: ZoomTapAnimation(
+                                        onTap: _showLottieAndDeleteItems,
+                                        child: Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            color: Colors.black,
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 15.0),
+                                            child: Center(
+                                              child: Text(
+                                                "${LocaleKeys.order_now.tr()}  /${calculateTotalPrice(foodItems).toStringAsFixed(2)}${LocaleKeys.usd.tr()}",
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontFamily: 'Sora',
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                              : const SizedBox(),
+                        ],
+                      ));
           } else {
             return Center(child: Text('Unknown state: $state'));
           }

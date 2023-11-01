@@ -46,6 +46,7 @@ class _TabBoxState extends State<TabBox> {
     return Scaffold(
       extendBody: true,
       body: IndexedStack(
+
         index: context.watch<TabCubit>().state,
         children: pages,
       ),

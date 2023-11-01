@@ -55,7 +55,9 @@ class CodegenLoader extends AssetLoader{
   "promotions": "Акции",
   "foods": "Еды",
   "order_success": "Заказ успешно оформлен...🤤",
-  "usd": "сум"
+  "usd": "сум",
+  "empty_cart": "В корзине пока нет заказов",
+  "no_order": "Пока нет заказов"
 };
 static const Map<String,dynamic> en = {
   "login_desc": "Sign in to place an order through the app 👇🏻",
@@ -98,7 +100,9 @@ static const Map<String,dynamic> en = {
   "promotions": "Promotions",
   "foods": "Foods",
   "order_success": "Order success...🤤",
-  "usd": "usd"
+  "usd": "usd",
+  "empty_cart": "No products on the cart",
+  "no_order": "No orders yet"
 };
 static const Map<String,dynamic> uz = {
   "login_desc": "Ilova orqali buyurtma berish uchun shaxsiy Accountingizga kiring 👇🏻",
@@ -141,7 +145,9 @@ static const Map<String,dynamic> uz = {
   "promotions": "Chegirmalar",
   "foods": "Taomlar",
   "order_success": "Buyurtma muvaffaqiyatli yuborildi...🤤",
-  "usd": "so'm"
+  "usd": "so'm",
+  "empty_cart": "Savatda hozir mahsulotlar mavjud emas",
+  "no_order": "Buyurtmalar mavjud emas"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru, "en": en, "uz": uz};
 }
