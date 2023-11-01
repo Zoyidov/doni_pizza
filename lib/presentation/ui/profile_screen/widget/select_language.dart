@@ -99,4 +99,10 @@ class _SelectLanguageState extends State<SelectLanguage> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    setState(() {});
+    super.dispose();
+  }
 }

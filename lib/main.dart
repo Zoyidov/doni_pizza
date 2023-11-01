@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         locale: context.locale,
         theme: ThemeData(useMaterial3: false),
         debugShowCheckedModeBanner: false,
-        home: const TabBox(),
+        home: const SplashScreen(),
       ),
     );
   }
