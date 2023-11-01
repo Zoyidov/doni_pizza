@@ -3,6 +3,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pizza/generated/locale_keys.g.dart';
+import 'package:pizza/presentation/ui/auth_screen/login_screen.dart';
+import 'package:pizza/presentation/ui/profile_screen/widget/about_us.dart';
+import 'package:pizza/presentation/ui/profile_screen/widget/admin_screen.dart';
+import 'package:pizza/presentation/ui/profile_screen/widget/edit_profile.dart';
 import 'package:pizza/presentation/ui/profile_screen/widget/select_language.dart';
 import 'package:pizza/presentation/widgets/dialog_gallery_camera.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
@@ -50,14 +54,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             padding: const EdgeInsets.only(right: 15.0, bottom: 5.0),
             child: IconButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const CartScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutUsScreen()));
               },
-              icon: const Icon(Icons.shopping_cart, color: Colors.black),
+              icon: const Icon(Icons.account_balance_outlined, color: Colors.black),
             ),
           )
         ],
       ),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           children: [
             ZoomTapAnimation(
@@ -125,7 +130,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 children: [
                   ProfileDetail(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfileScreen()));
+                    },
                     textColor: Colors.black,
                     icon: const Icon(Icons.person),
                     text: LocaleKeys.my_profile.tr(),
@@ -149,7 +156,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   //   showSwitch: true,
                   // ),
                   ProfileDetail(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminScreen()));
+                    },
                     textColor: Colors.black,
                     icon: const Icon(Icons.admin_panel_settings_rounded),
                     text: LocaleKeys.app_admin.tr(),
@@ -198,7 +207,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  Navigator.of(context).pop();
+                                  Navigator.pop(context);
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const LoginScreen()));
                                 },
                                 child: Text(
                                   LocaleKeys.yes.tr(),

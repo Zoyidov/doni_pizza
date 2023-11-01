@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pizza/business_logic/bloc/order_bloc.dart';
 import 'package:pizza/business_logic/bloc/state_bloc.dart';
@@ -19,15 +20,17 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_){
+    runApp(
       EasyLocalization(
-        assetLoader: const CodegenLoader(),
+          assetLoader: const CodegenLoader(),
           supportedLocales: const [Locale('en'), Locale('ru'), Locale('uz')],
           path: 'assets/translations',
           fallbackLocale: const Locale('en'),
-          child: const MyApp()
-      ),
-  );
+          child: const MyApp()),
+    );
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -45,6 +48,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => OrderBloc()),
       ],
       child: MaterialApp(
+
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,

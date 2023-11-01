@@ -67,6 +67,7 @@ class _LanguageDetailState extends State<LanguageDetail> {
               ),
               if (widget.showSwitch)
                 Radio<bool>(
+                  activeColor: Colors.black,
                   value: true,
                   groupValue: widget.isSelected ? true : null,
                   onChanged: (value) {

@@ -41,5 +41,14 @@
   "order_success": "Buyurtma muvaffaqiyatli yuborildi...\uD83E\uDD24",
   "usd": "so'm",
   "empty_cart": "Savatda hozir mahsulotlar mavjud emas",
-  "no_order": "Buyurtmalar mavjud emas"
+  "no_order": "Buyurtmalar mavjud emas",
+  "code_sent": "Siz kiritgan telefon raqamiga kod yuborildi.",
+  "enter_code": "Iltimos kodni kiriting!",
+  "error_code": "Kod xato kiritildi!",
+  "passwords_do_not_match": "Parollar bir xil emas!",
+  "resend_code": "Kodni qayta yuborish",
+  "resend_code_disable": "1 daqiqadan so'ng kodni qayta yuborish mumkin",
+  "resend_in": "Qayta yuborish",
+  "password_length_error": "Parol 8 simvoldan kam bolmasligi kerak!",
+  "edit_profile": "Profil ma'lumotlarini tahrirlash"
 }

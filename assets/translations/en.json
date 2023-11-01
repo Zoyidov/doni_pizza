@@ -34,12 +34,21 @@
   "enter_name": "Enter your name",
   "error_phone_number": "Invalid phone number entered!",
   "enter_password": "Enter your password",
-  "error_password": "Passwords do not match!",
+  "error_password": "Password error!",
   "successfully_added_to_cart": "Successfully added to cart!",
   "promotions": "Promotions",
   "foods": "Foods",
   "order_success": "Order success...\uD83E\uDD24",
   "usd": "usd",
   "empty_cart": "No products on the cart",
-  "no_order": "No orders yet"
+  "no_order": "No orders yet",
+  "code_sent": "Code sent to your phone number.",
+  "enter_code": "Enter code!",
+  "error_code": "Invalid code!",
+  "password_does_not_match": "Passwords do not match!",
+  "resend_code": "Resend Code",
+  "resend_code_disable": "Resend Code Disable",
+  "resend_in": "Resend in",
+  "password_length_error": "Password must be at least 8 characters!",
+  "edit_profile": "Edit your profile data"
 }

@@ -6,6 +6,7 @@ import 'package:pizza/utils/icons.dart';
 
 import '../../../generated/locale_keys.g.dart';
 import '../tab_box/tab_box.dart';
+import 'confirm_verification_code.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -16,12 +17,41 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late TextEditingController passwordController;
+  late TextEditingController confirmPasswordController;
+
+  @override
+  void initState() {
+    super.initState();
+    passwordController = TextEditingController();
+    confirmPasswordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  String? passwordsMatch(String? value) {
+    if (passwordController.text.length < 8) {
+      return LocaleKeys.password_length_error.tr();
+    }
+
+    if (value != passwordController.text) {
+      return LocaleKeys.password_does_not_match.tr();
+    }
+
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Form(
           key: _formKey,
           child: Column(
@@ -57,7 +87,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         caption: LocaleKeys.Name.tr(),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Ismingizni kiriting!';
+                            return LocaleKeys.enter_name.tr();
                           }
                           return null;
                         }),
@@ -75,14 +105,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     GlobalTextField(
                       hintText: '********',
                       keyboardType: TextInputType.visiblePassword,
-                      textInputAction: TextInputAction.done,
+                      textInputAction: TextInputAction.next,
                       caption: LocaleKeys.password.tr(),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return LocaleKeys.enter_password.tr();
-                        }
-                        return null;
-                      },
+                      controller: passwordController,
+                      validator: passwordsMatch,
                       max: 1,
                     ),
                     GlobalTextField(
@@ -90,12 +116,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       keyboardType: TextInputType.visiblePassword,
                       textInputAction: TextInputAction.done,
                       caption: LocaleKeys.confirm_password.tr(),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return LocaleKeys.confirm_password.tr();
-                        }
-                        return null;
-                      },
+                      controller: confirmPasswordController,
+                      validator: passwordsMatch,
                       max: 1,
                     ),
                     Container(
@@ -108,7 +130,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         borderRadius: BorderRadius.circular(16.0),
                         onTap: () {
                           if (_formKey.currentState!.validate()) {
-                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const TabBox()));
+                            if (passwordController.text ==
+                                confirmPasswordController.text) {
+                              Navigator.of(context)
+                                  .push(MaterialPageRoute(
+                                builder: (context) =>
+                                    const ConfirmVerificationCodeScreen(),
+                              ));
+                            }
                           }
                         },
                         child: Padding(
@@ -116,7 +145,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             child: Center(
                               child: Text(
                                 LocaleKeys.sign_up.tr(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Sora',
                                     fontWeight: FontWeight.bold),
@@ -140,19 +169,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(AppImages.google),
-                        const SizedBox(
-                          width: 10.0,
-                        ),
-                         Text(LocaleKeys.continue_with_google.tr(),),
-                      ]
-                    ),
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(AppImages.google),
+                          const SizedBox(
+                            width: 10.0,
+                          ),
+                          Text(
+                            LocaleKeys.continue_with_google.tr(),
+                          ),
+                        ]),
                   ),
                 ),
               ),
-              const SizedBox(height: 100,)
+              const SizedBox(
+                height: 100,
+              )
             ],
           ),
         ),

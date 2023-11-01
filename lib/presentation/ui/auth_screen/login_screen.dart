@@ -23,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Form(
           key: _formKey,
           child: Column(
