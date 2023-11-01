@@ -1,7 +1,10 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+
+import '../../generated/locale_keys.g.dart';
 
 class GlobalTextField extends StatefulWidget {
   final String hintText;
@@ -139,7 +142,7 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
           validator: (value) {
             if (widget.keyboardType == TextInputType.phone) {
               if (value != null && value.length < 19) {
-                return 'Telefon raqam xato kiritildi!';
+                return LocaleKeys.error_phone_number.tr();
               }
             }
             if (widget.validator != null) {

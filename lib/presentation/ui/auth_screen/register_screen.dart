@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pizza/presentation/widgets/global_textfield.dart';
 import 'package:pizza/utils/icons.dart';
 
+import '../../../generated/locale_keys.g.dart';
 import '../tab_box/tab_box.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -34,11 +36,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     fontWeight: FontWeight.bold,
                     fontSize: 30),
               )),
-              const Padding(
-                padding: EdgeInsets.symmetric(
+              Padding(
+                padding: const EdgeInsets.symmetric(
                     horizontal: 16.0, vertical: 20.0),
                 child: Text(
-                  'Ilova orqali buyurtma berish uchun ro\'yxatdan o\'ting 👇🏻',
+                  LocaleKeys.auth_desc.tr(),
                   style: TextStyle(
                       color: Colors.black, fontFamily: 'Sora', fontSize: 18),
                 ),
@@ -52,7 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         hintText: 'Doni Pizza',
                         keyboardType: TextInputType.name,
                         textInputAction: TextInputAction.next,
-                        caption: 'Isim',
+                        caption: LocaleKeys.Name.tr(),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Ismingizni kiriting!';
@@ -63,10 +65,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         hintText: '+(998) 99-999-99',
                         keyboardType: TextInputType.phone,
                         textInputAction: TextInputAction.next,
-                        caption: 'Telefon raqam',
+                        caption: LocaleKeys.phone_number.tr(),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Telefon raqamingizni kiriting!';
+                            return LocaleKeys.error_phone_number.tr();
                           }
                           return null;
                         }),
@@ -74,10 +76,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       hintText: '********',
                       keyboardType: TextInputType.visiblePassword,
                       textInputAction: TextInputAction.done,
-                      caption: 'Parol',
+                      caption: LocaleKeys.password.tr(),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Parolni kiriting!';
+                          return LocaleKeys.enter_password.tr();
                         }
                         return null;
                       },
@@ -87,10 +89,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       hintText: '********',
                       keyboardType: TextInputType.visiblePassword,
                       textInputAction: TextInputAction.done,
-                      caption: 'Parol',
+                      caption: LocaleKeys.confirm_password.tr(),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Parolni tasdiqlang!';
+                          return LocaleKeys.confirm_password.tr();
                         }
                         return null;
                       },
@@ -109,11 +111,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const TabBox()));
                           }
                         },
-                        child: const Padding(
-                            padding: EdgeInsets.all(10.0),
+                        child: Padding(
+                            padding: const EdgeInsets.all(10.0),
                             child: Center(
                               child: Text(
-                                'Ro\'yxatdan o\'tish',
+                                LocaleKeys.sign_up.tr(),
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Sora',
@@ -144,8 +146,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         const SizedBox(
                           width: 10.0,
                         ),
-                        const Text('Google bilan davom ettirish!'),
-                      ],
+                         Text(LocaleKeys.continue_with_google.tr(),),
+                      ]
                     ),
                   ),
                 ),

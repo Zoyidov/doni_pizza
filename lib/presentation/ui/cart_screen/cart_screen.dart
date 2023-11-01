@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pizza/business_logic/bloc/order_bloc.dart';
 import 'package:pizza/business_logic/bloc/state_bloc.dart';
+import 'package:pizza/generated/locale_keys.g.dart';
 import 'package:pizza/utils/icons.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../data/database/food_database.dart';
@@ -48,7 +50,7 @@ class _CartScreenState extends State<CartScreen> {
 
     Fluttertoast.showToast(
       timeInSecForIosWeb: 3,
-      msg: 'Order success...🤤',
+      msg: LocaleKeys.order_success.tr(),
       toastLength: Toast.LENGTH_LONG,
       gravity: ToastGravity.CENTER_RIGHT,
       backgroundColor: Colors.white,
@@ -115,9 +117,9 @@ class _CartScreenState extends State<CartScreen> {
         elevation: 0,
         scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
-        title: const Text(
-          'Cart',
-          style: TextStyle(
+        title: Text(
+          LocaleKeys.cart.tr(),
+          style: const TextStyle(
             color: Colors.black,
             fontFamily: 'Sora',
             fontWeight: FontWeight.w600,
@@ -133,10 +135,10 @@ class _CartScreenState extends State<CartScreen> {
               padding: const EdgeInsets.symmetric(
                 horizontal: 10.0,
               ),
-              child: const Center(
+              child: Center(
                 child: Text(
-                  'Clear',
-                  style: TextStyle(
+                  LocaleKeys.clear.tr(),
+                  style: const TextStyle(
                     color: Colors.red,
                     fontFamily: 'Sora',
                     fontWeight: FontWeight.w600,
@@ -153,7 +155,7 @@ class _CartScreenState extends State<CartScreen> {
           if (state is TodoInitialState || state is FoodLoadingState) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is FoodErrorState) {
-            return Center(child: Text('Error: ${state.errorMessage}'));
+            return Center(child: Text('${state.errorMessage}'));
           } else if (state is FoodLoadedState) {
             List<FoodModel> foodItems = state.foods;
             return Padding(
@@ -215,7 +217,7 @@ class _CartScreenState extends State<CartScreen> {
                                       subtitle: Row(
                                         children: [
                                           Text(
-                                            '\$${item.price}',
+                                            '${item.price}${LocaleKeys.usd.tr()}',
                                             style: const TextStyle(
                                                 color: Colors.black, fontFamily: 'Sora'),
                                           ),
@@ -292,7 +294,7 @@ class _CartScreenState extends State<CartScreen> {
                                       padding: const EdgeInsets.symmetric(vertical: 15.0),
                                       child: Center(
                                         child: Text(
-                                          "Order Now   / \$${calculateTotalPrice(foodItems).toStringAsFixed(2)}",
+                                          "${LocaleKeys.order_now.tr()}  /${calculateTotalPrice(foodItems).toStringAsFixed(2)}${LocaleKeys.usd.tr()}",
                                           style: const TextStyle(
                                             color: Colors.white,
                                             fontFamily: 'Sora',

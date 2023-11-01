@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pizza/business_logic/bloc/order_bloc.dart';
+import 'package:pizza/generated/locale_keys.g.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class OrdersScreen extends StatefulWidget {
@@ -28,9 +30,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
         automaticallyImplyLeading: false,
         centerTitle: false,
         backgroundColor: Colors.white,
-        title: const Text(
-          'Orders',
-          style: TextStyle(
+        title: Text(
+          LocaleKeys.orders.tr(),
+          style: const TextStyle(
             color: Colors.black,
             fontFamily: 'Sora',
             fontWeight: FontWeight.w600,
@@ -46,10 +48,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
               padding: const EdgeInsets.symmetric(
                 horizontal: 10.0,
               ),
-              child: const Center(
+              child: Center(
                 child: Text(
-                  'Clear',
-                  style: TextStyle(
+                  LocaleKeys.clear.tr(),
+                  style: const TextStyle(
                     color: Colors.red,
                     fontFamily: 'Sora',
                     fontWeight: FontWeight.w600,
@@ -97,7 +99,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                           ),
                         ),
                         trailing: Text(
-                          '\$${order.totalCost.toStringAsFixed(2)}',
+                          '${order.totalCost.toStringAsFixed(2)}${LocaleKeys.usd.tr()}',
                           style: const TextStyle(
                             color: Colors.indigo,
                             fontFamily: 'Sora',

@@ -3,6 +3,12 @@
 <plist version="1.0">
 <dict>
 
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsLocalNetworking</key>
+        <true/>
+    </dict>
+
     <key>NSPhotoLibraryUsageDescription</key>
 	<string>This app requires photo permission</string>
 	<key>NSCameraUsageDescription</key>
@@ -66,5 +72,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>CFBundleLocalizations</key>
+    <array>
+    	<string>en</string>
+    	<string>ru</string>
+    	<string>uz</string>
+    </array>
 </dict>
 </plist>

@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:pizza/generated/locale_keys.g.dart';
 import 'package:pizza/utils/icons.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -34,10 +36,10 @@ class Promotions extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                       child: Text(
-                        "Promotions",
+                        LocaleKeys.promotions.tr(),
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,

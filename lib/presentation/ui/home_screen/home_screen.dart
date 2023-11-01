@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pizza/business_logic/bloc/state_bloc.dart';
 import 'package:pizza/data/model/food_model.dart';
+import 'package:pizza/generated/locale_keys.g.dart';
 import 'package:pizza/presentation/ui/home_screen/promotions/promotions.dart';
 import 'package:pizza/presentation/widgets/global_textfield.dart';
 import 'package:pizza/utils/icons.dart';
@@ -189,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.white,
         title: isSearching
             ? GlobalTextField(
-                hintText: 'Search',
+                hintText: LocaleKeys.search.tr(),
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.search,
                 caption: '',
@@ -198,9 +200,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   filterFoods(query);
                 },
               )
-            : const Text(
-                "Menu",
-                style: TextStyle(
+            : Text(
+                LocaleKeys.menu.tr(),
+                style: const TextStyle(
                   color: Colors.black,
                   fontFamily: 'Sora',
                   fontWeight: FontWeight.w600,
@@ -263,10 +265,10 @@ class _HomeScreenState extends State<HomeScreen> {
               onSelectedCategory: updateCategory,
             ),
             Promotions(),
-            const Padding(
-              padding: EdgeInsets.only(left: 10.0, top: 10.0),
-              child: Text("Popular",
-                  style: TextStyle(
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0, top: 10.0),
+              child: Text(LocaleKeys.foods.tr(),
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
                   )),
@@ -358,7 +360,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               count: item.count,
                                             )));
                                         Fluttertoast.showToast(
-                                          msg: 'Successfully added to cart!',
+                                          msg: LocaleKeys.successfully_added_to_cart.tr(),
                                           toastLength: Toast.LENGTH_SHORT,
                                           gravity: ToastGravity.BOTTOM,
                                           backgroundColor: Colors.white,

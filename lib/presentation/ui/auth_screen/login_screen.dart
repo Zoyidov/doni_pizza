@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pizza/generated/locale_keys.g.dart';
 import 'package:pizza/presentation/ui/auth_screen/register_screen.dart';
 import 'package:pizza/presentation/widgets/global_textfield.dart';
 import 'package:pizza/utils/icons.dart';
@@ -41,11 +43,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: MediaQuery.of(context).size.width/1.2,
                 fit: BoxFit.fill,
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: 16.0, vertical: 20.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0),
                 child: Text(
-                  'Ilova orqali buyurtma berish uchun shaxsiy Accountingizga kiring 👇🏻',
+                  LocaleKeys.login_desc.tr(),
                   style: TextStyle(
                       color: Colors.black, fontFamily: 'Sora', fontSize: 18),
                 ),
@@ -59,10 +61,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         hintText: '+(998) 99-999-99',
                         keyboardType: TextInputType.phone,
                         textInputAction: TextInputAction.next,
-                        caption: 'Telefon raqam',
+                        caption: LocaleKeys.phone_number.tr(),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Telefon raqamingizni kiriting!';
+                            return LocaleKeys.error_phone_number.tr();
                           }
                           return null;
                         }),
@@ -70,11 +72,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       hintText: '********',
                       keyboardType: TextInputType.visiblePassword,
                       textInputAction: TextInputAction.done,
-                      caption: 'Parol',
+                      caption: LocaleKeys.password.tr(),
                       max: 1,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Parol noto\'g\'ri kiritildi!';
+                          return LocaleKeys.error_password.tr();
                         }
                         return null;
                       },
@@ -94,12 +96,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                     builder: (context) => const TabBox()));
                           }
                         },
-                        child: const Padding(
-                            padding: EdgeInsets.all(10.0),
+                        child: Padding(
+                            padding: const EdgeInsets.all(10.0),
                             child: Center(
                               child: Text(
-                                'Kirish',
-                                style: TextStyle(
+                                LocaleKeys.login.tr(),
+                                style: const TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'Sora',
                                     fontWeight: FontWeight.bold),
@@ -129,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(
                           width: 10.0,
                         ),
-                        const Text('Google bilan davom ettirish!'),
+                        Text(LocaleKeys.continue_with_google.tr()),
                       ],
                     ),
                   ),
@@ -148,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: Text(
-                      'yoki',
+                      LocaleKeys.or.tr(),
                       style: TextStyle(
                           color: Colors.grey.shade500,
                           fontSize: 15,
@@ -169,15 +171,15 @@ class _LoginScreenState extends State<LoginScreen> {
               RichText(
                 text: TextSpan(
                   children: [
-                    const TextSpan(
-                      text: 'Accountingiz mavjud emasmi?',
+                    TextSpan(
+                      text: LocaleKeys.do_not_have_an_account.tr(),
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 12,
                           fontFamily: 'Sora'),
                     ),
                     TextSpan(
-                      text: ' Ro\'yxatdan o\'ting',
+                      text:  LocaleKeys.sign_up.tr(),
                       style: const TextStyle(
                         color: Colors.red,
                         fontSize: 15,

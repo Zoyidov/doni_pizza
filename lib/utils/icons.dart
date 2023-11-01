@@ -12,6 +12,9 @@ class AppImages{
   //svg
   static const String search = 'assets/svg/search.svg';
   static const String google = 'assets/svg/google.svg';
+  static const String usa = 'assets/svg/usa.svg';
+  static const String rus = 'assets/svg/rus.svg';
+  static const String uzb = 'assets/svg/uzb.svg';
 
 
   //lottie

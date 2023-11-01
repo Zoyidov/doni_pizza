@@ -1,25 +1,33 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pizza/business_logic/bloc/order_bloc.dart';
 import 'package:pizza/business_logic/bloc/state_bloc.dart';
 import 'package:pizza/business_logic/cubit/tab_cubit.dart';
-import 'package:pizza/firebase_options.dart';
+import 'package:pizza/generated/codegen_loader.g.dart';
 import 'package:pizza/presentation/ui/splash_screen/splash_screen.dart';
 import 'package:pizza/presentation/ui/tab_box/tab_box.dart';
-// ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
 
 import 'data/database/orders_database.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
-  runApp(const MyApp());
-  // Fluttertoast.showToast(msg: "App initialized");
+  await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(
+      EasyLocalization(
+        assetLoader: CodegenLoader(),
+          supportedLocales: [Locale('en'), Locale('ru'), Locale('uz')],
+          path: 'assets/translations',
+          fallbackLocale: Locale('en'),
+          child: MyApp()
+      ),
+  );
   await OrderDatabase.instance.initDatabase();
 }
 
@@ -38,6 +46,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => OrderBloc()),
       ],
       child: MaterialApp(
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
         theme: ThemeData(useMaterial3: false),
         debugShowCheckedModeBanner: false,
         home: const SplashScreen(),
