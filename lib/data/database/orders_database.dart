@@ -6,18 +6,25 @@ import 'package:path/path.dart';
 import '../model/order_model.dart';
 
 class OrderDatabase {
-  late Database _database;
+  static final OrderDatabase instance = OrderDatabase._privateConstructor();
+  static Database? db;
 
   OrderDatabase._privateConstructor();
-  static final OrderDatabase instance = OrderDatabase._privateConstructor();
 
-  Future<void> initDatabase() async {
-    final path = join(await getDatabasesPath(), 'orders.db');
-    _database = await openDatabase(
-      path,
-      version: 1,
-      onCreate: (db, version) {
-        db.execute('''
+  Future<Database> get database async {
+    if (db != null) return db!;
+    db = await _initDatabase();
+    return db!;
+  }
+
+  Future<Database> _initDatabase() async {
+    final path = await getDatabasesPath();
+    final dbPath = join(path, 'orders.db');
+    return await openDatabase(dbPath, version: 1, onCreate: _createTable);
+  }
+
+  Future<void> _createTable(Database db, int version) async {
+    await db.execute('''
           CREATE TABLE orders(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             foodNames TEXT,
@@ -25,16 +32,16 @@ class OrderDatabase {
             timestamp TEXT
           )
         ''');
-      },
-    );
   }
 
   Future<void> insertOrder(OrderModel order) async {
-    await _database.insert('orders', order.toMap());
+    final db = await instance.database;
+    await db.insert('orders', order.toMap());
   }
 
   Future<List<OrderModel>> getAllOrders() async {
-    final List<Map<String, dynamic>> maps = await _database.query('orders');
+    final db = await instance.database;
+    final List<Map<String, dynamic>> maps = await db.query('orders');
     return List.generate(maps.length, (index) {
       return OrderModel(
         foodNames: maps[index]['foodNames'],
@@ -45,7 +52,8 @@ class OrderDatabase {
   }
 
   Future<void> updateTotalCost(String description, double newTotalCost) async {
-    await _database.update(
+    final db = await instance.database;
+    await db.update(
       'orders',
       {'totalCost': newTotalCost},
       where: 'foodNames = ?',
@@ -56,10 +64,12 @@ class OrderDatabase {
 
 
   Future<void> deleteAllOrders() async {
-    await _database.delete('orders');
+    final db = await instance.database;
+    await db.delete('orders');
   }
 
   Future<void> closeDatabase() async {
-    await _database.close();
+    final db = await instance.database;
+    await db.close();
   }
 }

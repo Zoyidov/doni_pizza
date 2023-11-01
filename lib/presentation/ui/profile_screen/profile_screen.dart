@@ -6,7 +6,6 @@ import 'package:pizza/generated/locale_keys.g.dart';
 import 'package:pizza/presentation/ui/profile_screen/widget/select_language.dart';
 import 'package:pizza/presentation/widgets/dialog_gallery_camera.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
-
 import '../cart_screen/cart_screen.dart';
 import 'widget/profile_detail.dart';
 
@@ -60,7 +59,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ZoomTapAnimation(
               onTap: () {
@@ -103,7 +101,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   LocaleKeys.user.tr(),

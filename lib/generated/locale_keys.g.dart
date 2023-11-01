@@ -42,5 +42,6 @@ abstract class  LocaleKeys {
   static const foods = 'foods';
   static const order_success = 'order_success';
   static const usd = 'usd';
-
+  static const empty_cart = 'empty_cart';
+  static const no_order = 'no_order';
 }

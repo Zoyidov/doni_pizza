@@ -15,6 +15,8 @@ class AppImages{
   static const String usa = 'assets/svg/usa.svg';
   static const String rus = 'assets/svg/rus.svg';
   static const String uzb = 'assets/svg/uzb.svg';
+  static const String empty_cart = 'assets/svg/empty_cart.svg';
+  static const String order_empty = 'assets/svg/order_empty.svg';
 
 
   //lottie

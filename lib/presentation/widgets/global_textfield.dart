@@ -117,7 +117,7 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
               borderRadius: BorderRadius.circular(10),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.black, width: 2),
+              borderSide: const BorderSide(width: 2),
               borderRadius: BorderRadius.circular(10),
             ),
             errorBorder: OutlineInputBorder(

@@ -39,5 +39,7 @@
   "promotions": "Promotions",
   "foods": "Foods",
   "order_success": "Order success...\uD83E\uDD24",
-  "usd": "usd"
+  "usd": "usd",
+  "empty_cart": "No products on the cart",
+  "no_order": "No orders yet"
 }

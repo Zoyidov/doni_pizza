@@ -39,5 +39,7 @@
   "promotions": "Chegirmalar",
   "foods": "Taomlar",
   "order_success": "Buyurtma muvaffaqiyatli yuborildi...\uD83E\uDD24",
-  "usd": "so'm"
+  "usd": "so'm",
+  "empty_cart": "Savatda hozir mahsulotlar mavjud emas",
+  "no_order": "Buyurtmalar mavjud emas"
 }

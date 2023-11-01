@@ -21,14 +21,13 @@ Future<void> main() async {
   );
   runApp(
       EasyLocalization(
-        assetLoader: CodegenLoader(),
-          supportedLocales: [Locale('en'), Locale('ru'), Locale('uz')],
+        assetLoader: const CodegenLoader(),
+          supportedLocales: const [Locale('en'), Locale('ru'), Locale('uz')],
           path: 'assets/translations',
-          fallbackLocale: Locale('en'),
-          child: MyApp()
+          fallbackLocale: const Locale('en'),
+          child: const MyApp()
       ),
   );
-  await OrderDatabase.instance.initDatabase();
 }
 
 class MyApp extends StatelessWidget {
@@ -51,7 +50,7 @@ class MyApp extends StatelessWidget {
         locale: context.locale,
         theme: ThemeData(useMaterial3: false),
         debugShowCheckedModeBanner: false,
-        home: const SplashScreen(),
+        home: const TabBox(),
       ),
     );
   }
