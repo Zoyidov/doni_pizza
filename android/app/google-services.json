@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "51487066392",
-    "project_id": "fast-food-app-b87d6",
-    "storage_bucket": "fast-food-app-b87d6.appspot.com"
+    "project_number": "613468850287",
+    "project_id": "uzum-4672c",
+    "storage_bucket": "uzum-4672c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:51487066392:android:634b9bd59eac27f0e3b66d",
+        "mobilesdk_app_id": "1:613468850287:android:978bac8ce87462d8c9e59a",
         "android_client_info": {
           "package_name": "com.example.pizza"
         }
@@ -15,7 +15,26 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDNiOoZawLGF0te457XlN_VgY4AAWxLn_I"
+          "current_key": "AIzaSyAM4MqZWX855A4KAs44HNhRM6A7zFqB10Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:613468850287:android:3f96747621924522c9e59a",
+        "android_client_info": {
+          "package_name": "com.example.uzum"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAM4MqZWX855A4KAs44HNhRM6A7zFqB10Y"
         }
       ],
       "services": {
