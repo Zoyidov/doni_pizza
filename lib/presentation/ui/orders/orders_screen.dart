@@ -1,11 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pizza/business_logic/bloc/order_bloc.dart';
 import 'package:pizza/generated/locale_keys.g.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
+
+import '../../../utils/icons.dart';
 
 class OrdersScreen extends StatefulWidget {
   const OrdersScreen({super.key});
@@ -70,12 +73,22 @@ class _OrdersScreenState extends State<OrdersScreen> {
           } else if (state is OrderLoadedState) {
             final orders = state.orders;
             return orders.isEmpty
-                ? const Center(
-                    child: Icon(
-                    CupertinoIcons.news,
-                    size: 100,
-                    color: Colors.black,
-                  ))
+                ?  Center(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(AppImages.order_empty),
+                    SizedBox(height: 32.0),
+                    Text(
+                      LocaleKeys.no_order.tr(),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          fontFamily: 'Sora',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ]),
+            )
                 : ListView.separated(
                     physics: const BouncingScrollPhysics(),
                     itemCount: orders.length,

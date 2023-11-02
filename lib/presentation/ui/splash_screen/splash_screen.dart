@@ -68,7 +68,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                   letterSpacing: 5.0,
                   shadows: [
                     Shadow(
-                      color: Colors.black,
                       offset: Offset(3, 3),
                       blurRadius: 5,
                     ),

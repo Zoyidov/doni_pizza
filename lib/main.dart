@@ -33,20 +33,17 @@ Future<void> main() async {
       );
   runApp(
     EasyLocalization(
-        assetLoader: CodegenLoader(),
-        supportedLocales: [Locale('en'), Locale('ru'), Locale('uz')],
+        assetLoader: const CodegenLoader(),
+        supportedLocales: const [Locale('en'), Locale('ru'), Locale('uz')],
         path: 'assets/translations',
-        fallbackLocale: Locale('en'),
-        child: MyApp()),
+        fallbackLocale: const Locale('en'),
+        child: const MyApp()),
   );
-  await OrderDatabase.instance.initDatabase();
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
-
+   MyApp({super.key});
   final AuthRepository authRepository = AuthRepository();
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
