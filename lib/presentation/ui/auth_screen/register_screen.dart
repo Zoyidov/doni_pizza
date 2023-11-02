@@ -50,13 +50,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        toolbarHeight: -15,
+      ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Form(
           key: _formKey,
           child: Column(
             children: [
-              const SizedBox(height: 100),
+              const SizedBox(height: 50),
               const Center(
                   child: Text(
                 'Doni Pizza',

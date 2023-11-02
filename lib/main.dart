@@ -10,8 +10,6 @@ import 'package:pizza/generated/codegen_loader.g.dart';
 import 'package:pizza/presentation/ui/splash_screen/splash_screen.dart';
 import 'package:pizza/presentation/ui/tab_box/tab_box.dart';
 import 'package:provider/provider.dart';
-
-import 'data/database/orders_database.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -25,9 +23,9 @@ Future<void> main() async {
     runApp(
       EasyLocalization(
           assetLoader: const CodegenLoader(),
-          supportedLocales: const [Locale('en'), Locale('ru'), Locale('uz')],
+          supportedLocales: const [Locale('uz'), Locale('ru'), Locale('en')],
           path: 'assets/translations',
-          fallbackLocale: const Locale('en'),
+          fallbackLocale: const Locale('uz'),
           child: const MyApp()),
     );
   });

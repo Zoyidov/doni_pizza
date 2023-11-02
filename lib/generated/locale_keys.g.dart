@@ -53,4 +53,16 @@ abstract class  LocaleKeys {
   static const resend_in = 'resend_in';
   static const password_length_error = 'password_length_error';
   static const edit_profile = 'edit_profile';
+  static const order_detail = 'order_detail';
+  static const recipient = 'recipient';
+  static const me = 'me';
+  static const another = 'else';
+  static const recipient_phone_number = 'recipient_phone_number';
+  static const mandatory = 'mandatory';
+  static const enter_address = 'enter_address';
+  static const address_mandatory = 'address_mandatory';
+  static const payment_method = 'payment_method';
+  static const cash_on_delivery = 'cash_on_delivery';
+  static const card_on_delivery = 'card_on_delivery';
+  static const confirm_order = 'confirm_order';
 }
