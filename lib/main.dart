@@ -37,12 +37,12 @@ Future<void> main() async {
         supportedLocales: const [Locale('en'), Locale('ru'), Locale('uz')],
         path: 'assets/translations',
         fallbackLocale: const Locale('en'),
-        child: const MyApp()),
+        child: MyApp()),
   );
 }
 
 class MyApp extends StatelessWidget {
-   MyApp({super.key});
+  MyApp({super.key});
   final AuthRepository authRepository = AuthRepository();
   @override
   Widget build(BuildContext context) {
