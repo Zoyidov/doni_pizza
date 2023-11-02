@@ -24,6 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
           if (state is LoginSuccess) {
@@ -38,6 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SnackBar(
                   content: Text(state.error),
                   duration: const Duration(seconds: 5),
+
                 ),
               );
           }

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pizza/business_logic/bloc/auth/login_bloc.dart';
 import 'package:pizza/business_logic/bloc/auth/otp_verification_bloc.dart';
@@ -22,6 +23,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   await FirebaseAppCheck.instance.activate(androidProvider: AndroidProvider.debug
       // Default provider for iOS/macOS is the Device Check provider. You can use the "AppleProvider" enum to choose
       // your preferred provider. Choose from:
@@ -31,14 +33,19 @@ Future<void> main() async {
       // 4. App Attest provider with fallback to Device Check provider (App Attest provider is only available on iOS 14.0+, macOS 14.0+)
       // appleProvider: AppleProvider appAttest,
       );
-  runApp(
-    EasyLocalization(
-        assetLoader: const CodegenLoader(),
-        supportedLocales: const [Locale('en'), Locale('ru'), Locale('uz')],
-        path: 'assets/translations',
-        fallbackLocale: const Locale('en'),
-        child: MyApp()),
-  );
+
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_){
+    runApp(
+      EasyLocalization(
+          assetLoader: const CodegenLoader(),
+          supportedLocales: const [Locale('en'), Locale('ru'), Locale('uz')],
+          path: 'assets/translations',
+          fallbackLocale: const Locale('en'),
+          child: const MyApp()),
+    );
+  });
+
 }
 
 class MyApp extends StatelessWidget {
@@ -59,6 +66,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => OTPVerificationBloc(authRepository)),
       ],
       child: MaterialApp(
+
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,

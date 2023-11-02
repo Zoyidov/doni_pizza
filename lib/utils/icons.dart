@@ -17,6 +17,7 @@ class AppImages{
   static const String uzb = 'assets/svg/uzb.svg';
   static const String empty_cart = 'assets/svg/empty_cart.svg';
   static const String order_empty = 'assets/svg/order_empty.svg';
+  static const String dev = 'assets/svg/dev.svg';
 
 
   //lottie

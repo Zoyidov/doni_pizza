@@ -7,7 +7,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 class Promotions extends StatelessWidget {
   final List<String> promotionTexts = [
-    "Order any large pizza\nand get a free appetizer of your choice. Don't miss out on our delicious deals every Monday!",
+    "Order any large pizza\nand get a free appetizer of your choice. Don't miss out on this deal today and enjoy your meal with your family.",
     "Enjoy the weekend\nwith our family meal deal - 2 large pizzas, 4 drinks, and a dessert for just \$40. Perfect for family gatherings!",
     "Get 30% off on any\npasta dish when you order with any pizza. Indulge in our mouthwatering pasta options today.",
     "Join our loyalty\nprogram and earn points with every order. Redeem your points for exclusive discounts and freebies!",
@@ -22,68 +22,65 @@ class Promotions extends StatelessWidget {
     return CarouselSlider(
       options: CarouselOptions(
         autoPlay: true,
-        aspectRatio: 1.6,
+        aspectRatio: 1.60,
         enlargeCenterPage: true,
         viewportFraction: 1,
         autoPlayInterval: const Duration(seconds: 2),
       ),
       items: promotionTexts.map((text) {
-        return ZoomTapAnimation(
-          child: Stack(
-            children: [
-              Container(
-                padding: const EdgeInsets.only(top: 60.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+        return Stack(
+          children: [
+            Container(
+              padding: const EdgeInsets.only(top: 60.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                    child: Text(
+                      LocaleKeys.promotions.tr(),
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      gradient: const LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [Colors.grey, Colors.black, Colors.black, Colors.black],
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 15.0),
                       child: Text(
-                        LocaleKeys.promotions.tr(),
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
+                        text,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'Sora',
                         ),
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height/7,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        gradient: const LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Colors.grey, Colors.black, Colors.black, Colors.black],
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 15.0),
-                        child: Text(
-                          text,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'Sora',
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Positioned(
-                right: 0,
-                top: 0,
-                child: Image.asset(
-                  AppImages.all,
-                  width: 200,
-                ),
+            ),
+            Positioned(
+              right: 0,
+              top: 0,
+              child: Image.asset(
+                AppImages.all,
+                width: 200,
               ),
-            ],
-          ),
+            ),
+          ],
         );
       }).toList(),
     );

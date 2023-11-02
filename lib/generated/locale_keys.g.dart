@@ -44,4 +44,13 @@ abstract class  LocaleKeys {
   static const usd = 'usd';
   static const empty_cart = 'empty_cart';
   static const no_order = 'no_order';
+  static const code_sent = 'code_sent';
+  static const enter_code = 'enter_code';
+  static const error_code = 'error_code';
+  static const password_does_not_match = 'password_does_not_match';
+  static const resend_code = 'resend_code';
+  static const resend_code_disable = 'resend_code_disable';
+  static const resend_in = 'resend_in';
+  static const password_length_error = 'password_length_error';
+  static const edit_profile = 'edit_profile';
 }

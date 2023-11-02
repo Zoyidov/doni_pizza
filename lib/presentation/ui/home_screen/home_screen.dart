@@ -252,7 +252,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Promotions(),
             Padding(
-              padding: const EdgeInsets.only(left: 10.0, top: 10.0),
+              padding: const EdgeInsets.only(left: 10.0,),
               child: Text(LocaleKeys.foods.tr(),
                   style: const TextStyle(
                     fontSize: 14,
@@ -277,8 +277,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     margin: const EdgeInsets.only(top: 10.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: Colors.black,
+                      gradient: const LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [Colors.grey, Colors.white, Colors.black, Colors.black, Colors.black],
+                      ),
                     ),
+
                     child: Center(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -292,15 +297,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               );
                             },
                             child: SizedBox(
-                              height: 140,
-                              width: 250,
+                              height: MediaQuery.of(context).size.height / 6,
+                              width: MediaQuery.of(context).size.width,
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 15.0),
-                                child: Hero(
-                                  tag: 'product_${item.name}',
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(12.0),
-                                    child: Image.asset(item.imagePath),
+                                child: Center(
+                                  child: Hero(
+                                    tag: 'product_${item.name}',
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(12.0),
+                                      child: Image.asset(item.imagePath),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -314,7 +321,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 Text(
                                   item.name,
-                                  style: const TextStyle(color: Colors.white),
+                                  style: const TextStyle(color: Colors.white,fontFamily: 'Sora', fontWeight: FontWeight.w600, fontSize: 16),
                                 ),
                                 const SizedBox(height: 10),
                                 Text(
@@ -326,13 +333,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
-                                      padding: const EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(8.0),
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12),
-                                        color: Colors.white.withOpacity(0.08),
+                                        borderRadius: BorderRadius.circular(16),
+                                        color: Colors.white.withOpacity(0.2),
                                       ),
                                       child: Text(
-                                        '\$ ${item.price.toStringAsFixed(2)}',
+                                        '${item.price.toStringAsFixed(2)} ${LocaleKeys.usd.tr()}',
                                         style: const TextStyle(color: Colors.white),
                                       ),
                                     ),

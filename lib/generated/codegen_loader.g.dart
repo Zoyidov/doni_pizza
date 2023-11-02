@@ -50,14 +50,23 @@ class CodegenLoader extends AssetLoader{
   "enter_name": "Введите ваше имя",
   "error_phone_number": "Введен неверный номер телефона!",
   "enter_password": "Введите пароль",
-  "error_password": "Пароли не совпадают!",
+  "error_password": "Неверный пароль!",
   "successfully_added_to_cart": "Успешно добавлен в корзину!",
   "promotions": "Акции",
   "foods": "Еды",
   "order_success": "Заказ успешно оформлен...🤤",
   "usd": "сум",
   "empty_cart": "В корзине пока нет заказов",
-  "no_order": "Пока нет заказов"
+  "no_order": "Пока нет заказов",
+  "code_sent": "Код был отправлен на ваш номер телефона.",
+  "enter_code": "Введите код!",
+  "error_code": "Неверный код!",
+  "password_does_not_match": "Пароли не совпадают!",
+  "resend_code": "Отправить код повторно",
+  "resend_code_disable": "Через 1 минуту код может будет отправлен снова",
+  "resend_in": "Отправить код повторно через",
+  "password_length_error": "Пароль должен быть не менее 8 символов!",
+  "edit_profile": "Редактировать данные профиля"
 };
 static const Map<String,dynamic> en = {
   "login_desc": "Sign in to place an order through the app 👇🏻",
@@ -95,14 +104,23 @@ static const Map<String,dynamic> en = {
   "enter_name": "Enter your name",
   "error_phone_number": "Invalid phone number entered!",
   "enter_password": "Enter your password",
-  "error_password": "Passwords do not match!",
+  "error_password": "Password error!",
   "successfully_added_to_cart": "Successfully added to cart!",
   "promotions": "Promotions",
   "foods": "Foods",
   "order_success": "Order success...🤤",
   "usd": "usd",
   "empty_cart": "No products on the cart",
-  "no_order": "No orders yet"
+  "no_order": "No orders yet",
+  "code_sent": "Code sent to your phone number.",
+  "enter_code": "Enter code!",
+  "error_code": "Invalid code!",
+  "password_does_not_match": "Passwords do not match!",
+  "resend_code": "Resend Code",
+  "resend_code_disable": "Resend Code Disable",
+  "resend_in": "Resend in",
+  "password_length_error": "Password must be at least 8 characters!",
+  "edit_profile": "Edit your profile data"
 };
 static const Map<String,dynamic> uz = {
   "login_desc": "Ilova orqali buyurtma berish uchun shaxsiy Accountingizga kiring 👇🏻",
@@ -147,7 +165,16 @@ static const Map<String,dynamic> uz = {
   "order_success": "Buyurtma muvaffaqiyatli yuborildi...🤤",
   "usd": "so'm",
   "empty_cart": "Savatda hozir mahsulotlar mavjud emas",
-  "no_order": "Buyurtmalar mavjud emas"
+  "no_order": "Buyurtmalar mavjud emas",
+  "code_sent": "Siz kiritgan telefon raqamiga kod yuborildi.",
+  "enter_code": "Iltimos kodni kiriting!",
+  "error_code": "Kod xato kiritildi!",
+  "password_does_not_match": "Parollar bir xil emas!",
+  "resend_code": "Kodni qayta yuborish",
+  "resend_code_disable": "1 daqiqadan so'ng kodni qayta yuborish mumkin",
+  "resend_in": "Qayta yuborish",
+  "password_length_error": "Parol 8 ta belgidan kam bolmasligi kerak!",
+  "edit_profile": "Profil ma'lumotlarini tahrirlash"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru, "en": en, "uz": uz};
 }
