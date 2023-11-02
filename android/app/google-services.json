@@ -12,7 +12,20 @@
           "package_name": "com.example.pizza"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "613468850287-5o162sgsj7sqs0rt44q0f05mcpegs9ka.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pizza",
+            "certificate_hash": "80db0d7926992471d6b7fc111392ccc6def3579f"
+          }
+        },
+        {
+          "client_id": "613468850287-s453kfmaoipqkjnb4oi0t0pqdcu62dle.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAM4MqZWX855A4KAs44HNhRM6A7zFqB10Y"
@@ -20,26 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:613468850287:android:3f96747621924522c9e59a",
-        "android_client_info": {
-          "package_name": "com.example.uzum"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAM4MqZWX855A4KAs44HNhRM6A7zFqB10Y"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "613468850287-s453kfmaoipqkjnb4oi0t0pqdcu62dle.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "613468850287-92e3fd33dqsjdh3vqi0isln81e7qqr6a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fastFoodApp"
+              }
+            }
+          ]
         }
       }
     }
