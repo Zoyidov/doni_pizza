@@ -63,6 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '613468850287',
     projectId: 'uzum-4672c',
     storageBucket: 'uzum-4672c.appspot.com',
+    androidClientId: '613468850287-5o162sgsj7sqs0rt44q0f05mcpegs9ka.apps.googleusercontent.com',
+    iosClientId: '613468850287-kjneid7qrnmi276i8dl9l9evul0ntek0.apps.googleusercontent.com',
     iosBundleId: 'com.example.pizza',
   );
 }
