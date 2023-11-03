@@ -19,7 +19,6 @@ import 'package:pizza/presentation/ui/splash_screen/splash_screen.dart';
 import 'package:pizza/presentation/ui/tab_box/tab_box.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:pizza/utils/logging/logger.dart';
-import 'data/database/orders_database.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -29,27 +28,20 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  await FirebaseAppCheck.instance.activate(androidProvider: AndroidProvider.debug
-      // Default provider for iOS/macOS is the Device Check provider. You can use the "AppleProvider" enum to choose
-      // your preferred provider. Choose from:
-      // 1. Debug provider
-      // 2. Device Check provider
-      // 3. App Attest provider
-      // 4. App Attest provider with fallback to Device Check provider (App Attest provider is only available on iOS 14.0+, macOS 14.0+)
-      // appleProvider: AppleProvider appAttest,
-      );
-
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) {
+  await FirebaseAppCheck.instance.activate(
+    androidProvider: AndroidProvider.debug,
+    appleProvider: AppleProvider.debug,
+  );
+  print(FirebaseAppCheck.instance.app.options.iosClientId);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
     runApp(
       EasyLocalization(
           assetLoader: const CodegenLoader(),
           supportedLocales: const [Locale('en'), Locale('ru'), Locale('uz')],
           path: 'assets/translations',
           fallbackLocale: const Locale('en'),
-
           child: MyApp()),
-          child:  MyApp()),
-
     );
   });
 }
@@ -72,7 +64,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => OrderBloc()),
         BlocProvider(create: (context) => AuthUserCubit()),
         BlocProvider(create: (context) => LoginBloc(authRepository)),
-        BlocProvider(create: (context) => RegistrationBloc(authRepository, userRepository)),
+        BlocProvider(
+            create: (context) =>
+                RegistrationBloc(authRepository, userRepository)),
         BlocProvider(create: (context) => OTPVerificationBloc(authRepository)),
       ],
       child: MaterialApp(
@@ -87,7 +81,8 @@ class MyApp extends StatelessWidget {
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
-                builder: (context) => state == null ? const WelcomeScreen() : const TabBox(),
+                builder: (context) =>
+                    state == null ? const TabBox() : const TabBox(),
               ),
               (route) => false,
             );

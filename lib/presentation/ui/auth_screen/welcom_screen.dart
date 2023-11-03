@@ -16,6 +16,7 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: TSizes.md),
         child: Center(
@@ -39,7 +40,7 @@ class WelcomeScreen extends StatelessWidget {
                       AppImages.login,
                       height: MediaQuery.of(context).size.height / 5,
                       width: MediaQuery.of(context).size.width / 1.2,
-                      fit: BoxFit.scaleDown,
+                      fit: BoxFit.fill,
                     ),
                   ],
                 ),
