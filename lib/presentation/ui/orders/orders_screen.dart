@@ -1,26 +1,28 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pizza/business_logic/bloc/order_bloc.dart';
 import 'package:pizza/generated/locale_keys.g.dart';
-import 'package:zoom_tap_animation/zoom_tap_animation.dart';
+import 'package:pizza/presentation/ui/orders/current_order_screen.dart';
 
 import '../../../utils/icons.dart';
 
 class OrdersScreen extends StatefulWidget {
-  const OrdersScreen({super.key});
+  const OrdersScreen() : super();
 
   @override
   State<OrdersScreen> createState() => _OrdersScreenState();
 }
 
-class _OrdersScreenState extends State<OrdersScreen> {
+class _OrdersScreenState extends State<OrdersScreen> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 2, vsync: this);
     context.read<OrderBloc>().add(LoadOrdersEvent());
   }
 
@@ -42,29 +44,34 @@ class _OrdersScreenState extends State<OrdersScreen> {
             fontSize: 30,
           ),
         ),
-        actions: [
-          ZoomTapAnimation(
-            onTap: () {
-              context.read<OrderBloc>().add(ClearOrdersEvent());
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10.0,
-              ),
-              child: Center(
-                child: Text(
-                  LocaleKeys.clear.tr(),
-                  style: const TextStyle(
-                    color: Colors.red,
-                    fontFamily: 'Sora',
-                    fontWeight: FontWeight.w600,
-                    fontSize: 15,
-                  ),
+        bottom: TabBar(
+          controller: _tabController,
+          indicatorColor: Colors.black,
+          tabs: [
+            Tab(
+              child: Text(
+                LocaleKeys.current_orders.tr(),
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'Sora',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
                 ),
               ),
             ),
-          ),
-        ],
+            Tab(
+              child: Text(
+                LocaleKeys.all_orders.tr(),
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'Sora',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
       body: BlocBuilder<OrderBloc, OrderState>(
         builder: (context, state) {
@@ -73,65 +80,74 @@ class _OrdersScreenState extends State<OrdersScreen> {
           } else if (state is OrderLoadedState) {
             final orders = state.orders;
             return orders.isEmpty
-                ?  Center(
+                ? Center(
               child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(AppImages.order_empty),
-                    SizedBox(height: 32.0),
-                    Text(
-                      LocaleKeys.no_order.tr(),
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                          fontFamily: 'Sora',
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(AppImages.order_empty),
+                  const SizedBox(height: 32.0),
+                  Text(
+                    LocaleKeys.no_order.tr(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontFamily: 'Sora',
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ]),
+                  ),
+                ],
+              ),
             )
-                : ListView.separated(
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: orders.length,
-                    separatorBuilder: (context, index) {
-                      return const Divider(
-                        height: 1,
-                        color: Colors.black,
-                      );
-                    },
-                    itemBuilder: (context, index) {
-                      final order = orders[index];
-                      final timestamp = DateTime.parse(order.timestamp);
-                      final formattedTimestamp = DateFormat('yyyy-MM-dd HH:mm').format(timestamp);
-                      return ListTile(
-                        title: Text(
-                          order.foodNames,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontFamily: 'Sora',
-                            fontWeight: FontWeight.w700,
-                          ),
+                : TabBarView(
+              controller: _tabController,
+              children: [
+                CurrentOrderScreen(),
+                ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: orders.length,
+                  separatorBuilder: (context, index) {
+                    return const Divider(
+                      height: 1,
+                      color: Colors.black,
+                    );
+                  },
+                  itemBuilder: (context, index) {
+                    final order = orders[index];
+                    final timestamp = DateTime.parse(order.timestamp);
+                    final formattedTimestamp = DateFormat('yyyy-MM-dd HH:mm').format(timestamp);
+                    return ListTile(
+                      title: Text(
+                        order.foodNames,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Sora',
+                          fontWeight: FontWeight.w700,
                         ),
-                        trailing: Text(
-                          '${order.totalCost.toStringAsFixed(2)}${LocaleKeys.usd.tr()}',
-                          style: const TextStyle(
-                            color: Colors.indigo,
-                            fontFamily: 'Sora',
-                          ),
+                      ),
+                      trailing: Text(
+                        '${order.totalCost.toStringAsFixed(2)}${LocaleKeys.usd.tr()}',
+                        style: const TextStyle(
+                          color: Colors.indigo,
+                          fontFamily: 'Sora',
                         ),
-                        subtitle: Row(
-                          children: [
-                            Text(
-                              '${LocaleKeys.ordered_at.tr()}: $formattedTimestamp',
-                              style: const TextStyle(
-                                color: Colors.grey,
-                                fontFamily: 'Sora',
-                              ),
+                      ),
+                      subtitle: Row(
+                        children: [
+                          Text(
+                            '${LocaleKeys.ordered_at.tr()}: $formattedTimestamp',
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontFamily: 'Sora',
                             ),
-                          ],
-                        ),
-                      );
-                    },
-                  );
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+
+              ],
+            );
           } else if (state is OrderErrorState) {
             return Center(child: Text('Error: ${state.errorMessage}'));
           } else {
@@ -140,5 +156,11 @@ class _OrdersScreenState extends State<OrdersScreen> {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 }

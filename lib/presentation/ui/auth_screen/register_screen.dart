@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pizza/business_logic/bloc/auth/registration_bloc.dart';
 import 'package:pizza/presentation/ui/auth_screen/otp_verification_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pizza/presentation/ui/tab_box/tab_box.dart';
 import 'package:pizza/presentation/widgets/global_textfield.dart';
 import 'package:pizza/utils/constants/texts.dart';
 import 'package:pizza/utils/dialogs/snackbar_dialogs.dart';
@@ -75,7 +76,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Widget _buildRegistrationForm(BuildContext context) {
-  
     // TODO remove this
     nameController.text = 'Alisher';
     phoneController.text = '+998 99 999 99 99';
@@ -99,14 +99,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   fontSize: 30),
             )),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
               child: Text(
                 LocaleKeys.auth_desc.tr(),
-                style: TextStyle(color: Colors.black, fontFamily: 'Sora', fontSize: 18),
+                style: TextStyle(
+                    color: Colors.black, fontFamily: 'Sora', fontSize: 18),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20),
               child: Column(
                 children: [
                   GlobalTextField(
@@ -161,7 +164,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       borderRadius: BorderRadius.circular(16.0),
                       onTap: () {
                         if (_formKey.currentState!.validate()) {
-                          if (passwordController.text == confirmPasswordController.text) {
+                          if (passwordController.text ==
+                              confirmPasswordController.text) {
                             // Navigator.of(context).push(MaterialPageRoute(
                             //   builder: (context) => const ConfirmVerificationCodeScreen(),
                             // ));
@@ -176,7 +180,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Center(
-                            child: BlocBuilder<RegistrationBloc, RegistrationState>(
+                            child: BlocBuilder<RegistrationBloc,
+                                RegistrationState>(
                               builder: (context, state) {
                                 if (state is RegistrationLoading) {
                                   return const Row(
@@ -217,21 +222,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 horizontal: 16.0,
               ),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16), border: Border.all(color: Colors.grey)),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: Colors.grey)),
               child: InkWell(
                 borderRadius: BorderRadius.circular(16.0),
                 onTap: () {},
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    SvgPicture.asset(AppImages.google),
-                    const SizedBox(
-                      width: 10.0,
-                    ),
-                    Text(
-                      LocaleKeys.continue_with_google.tr(),
-                    ),
-                  ]),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(AppImages.google),
+                        const SizedBox(
+                          width: 10.0,
+                        ),
+                        Text(
+                          LocaleKeys.continue_with_google.tr(),
+                        ),
+                      ]),
                 ),
               ),
             ),
@@ -240,6 +248,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             )
           ],
         ),
-      );
+      ),
+    );
   }
 }
