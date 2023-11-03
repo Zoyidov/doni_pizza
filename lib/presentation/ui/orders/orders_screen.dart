@@ -121,7 +121,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         subtitle: Row(
                           children: [
                             Text(
-                              'Ordered at: $formattedTimestamp',
+                              '${LocaleKeys.ordered_at.tr()}: $formattedTimestamp',
                               style: const TextStyle(
                                 color: Colors.grey,
                                 fontFamily: 'Sora',

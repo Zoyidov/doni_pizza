@@ -62,5 +62,6 @@
   "payment_method": "Способ оплаты",
   "cash_on_delivery": "Наличные",
   "card_on_delivery": "Карта",
-  "confirm_order": "Подтвердить заказ"
+  "confirm_order": "Подтвердить заказ",
+  "ordered_at": "Доставлен в"
 }

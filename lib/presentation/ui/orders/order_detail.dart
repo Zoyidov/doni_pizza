@@ -81,6 +81,8 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -204,7 +206,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                   },
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  padding: EdgeInsets.only(left: 16.0,right: 16.0, bottom: height/2),
                   child: InkWell(
                     onTap: () {
                       if (_formKey.currentState!.validate()){

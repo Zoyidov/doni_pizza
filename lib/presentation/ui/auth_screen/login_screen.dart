@@ -27,7 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0,
-        toolbarHeight: -15,),
+        toolbarHeight: -15,
+      ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

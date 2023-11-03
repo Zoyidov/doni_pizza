@@ -27,7 +27,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        toolbarHeight: 0,
+        title: Text(
+          LocaleKeys.edit_profile.tr(),
+          style: TextStyle(
+            fontSize: 24,
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         automaticallyImplyLeading: false,
       ),
       body: Padding(
@@ -37,13 +44,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
-                LocaleKeys.edit_profile.tr(),
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
               SizedBox(height: 20),
               GlobalTextField(
                   hintText: 'Doni Pizza',
