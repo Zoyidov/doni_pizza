@@ -1,17 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pizza/business_logic/bloc/auth/registration_bloc.dart';
 import 'package:pizza/presentation/ui/auth_screen/otp_verification_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pizza/presentation/ui/tab_box/tab_box.dart';
 import 'package:pizza/presentation/widgets/global_textfield.dart';
 import 'package:pizza/utils/constants/texts.dart';
 import 'package:pizza/utils/dialogs/snackbar_dialogs.dart';
 import 'package:pizza/utils/icons.dart';
 
 import '../../../generated/locale_keys.g.dart';
-import '../tab_box/tab_box.dart';
 import 'confirm_verification_code.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -52,6 +51,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        toolbarHeight: -15,
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
       body: BlocListener<RegistrationBloc, RegistrationState>(
         listener: (context, state) {
           if (state is RegistrationFailure) {
@@ -132,6 +136,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     GlobalTextField(
                       hintText: '********',
                       keyboardType: TextInputType.visiblePassword,
+
                       textInputAction: TextInputAction.next,
                       caption: LocaleKeys.password.tr(),
                       controller: passwordController,
@@ -199,6 +204,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         color: Colors.black,
                                         fontFamily: 'Sora',
                                         fontWeight: FontWeight.bold),
+
                                   );
                                 },
                               ),
@@ -238,5 +244,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ],
           ),
         ));
+
   }
 }

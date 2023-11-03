@@ -62,5 +62,10 @@
   "payment_method": "Payment method",
   "cash_on_delivery": "Cash on delivery",
   "card_on_delivery": "Card on delivery",
-  "confirm_order": "Confirm order"
+  "confirm_order": "Confirm order",
+  "ordered_at": "Ordered at",
+  "cancel": "Cancel",
+  "sure_to_clear_cart": "Are you sure you want to clear the cart?",
+  "current_orders": "Current",
+  "all_orders": "All"
 }

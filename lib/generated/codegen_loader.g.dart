@@ -79,7 +79,12 @@ class CodegenLoader extends AssetLoader {
     "payment_method": "Способ оплаты",
     "cash_on_delivery": "Наличные",
     "card_on_delivery": "Карта",
-    "confirm_order": "Подтвердить заказ"
+    "confirm_order": "Подтвердить заказ",
+    "ordered_at": "Доставлен в",
+    "cancel": "Отмена",
+    "sure_to_clear_cart": "Вы уверены, что хотите очистить корзину?",
+    "current_orders": "Текущие",
+    "all_orders": "Все"
   };
   static const Map<String, dynamic> en = {
     "login_desc": "Sign in to place an order through the app 👇🏻",
@@ -145,7 +150,12 @@ class CodegenLoader extends AssetLoader {
     "payment_method": "Payment Method",
     "cash_on_delivery": "Cash on delivery",
     "card_on_delivery": "Card on delivery",
-    "confirm_order": "Confirm order"
+    "confirm_order": "Confirm order",
+    "ordered_at": "Ordered at",
+    "cancel": "Cancel",
+    "sure_to_clear_cart": "Are you sure you want to clear the cart?",
+    "current_orders": "Current",
+    "all_orders": "All",
   };
   static const Map<String, dynamic> uz = {
     "login_desc":
@@ -173,8 +183,7 @@ class CodegenLoader extends AssetLoader {
     "order_now": "Buyurtma berish",
     "orders": "Buyurtmalar",
     "clear_orders": "Buyurtmalarni tozalash",
-    "clear_orders_confirm":
-        "Buyurtmalarni tozalashni tasdiqlashni xohlaysizmi?",
+    "clear_orders_confirm": "Buyurtmalarni tozalashni tasdiqlashni xohlaysizmi?",
     "profile": "Profil",
     "my_profile": "Mening profilim",
     "language": "Til",
@@ -214,7 +223,12 @@ class CodegenLoader extends AssetLoader {
     "payment_method": "To'lov turi",
     "cash_on_delivery": "Naqd",
     "card_on_delivery": "Karta",
-    "confirm_order": "Buyurtmani tasdiqlash"
+    "confirm_order": "Buyurtmani tasdiqlash",
+    "ordered_at": "Buyurtma qilindi",
+    "cancel": "Bekor qilish",
+    "sure_to_clear_cart": "Savatni tozalashni xohlaysizmi?",
+    "current_orders": "Hozirgi",
+    "all_orders": "Barchasi",
   };
   static const Map<String, Map<String, dynamic>> mapLocales = {
     "ru": ru,

@@ -62,6 +62,10 @@
   "payment_method": "To'lov turi",
   "cash_on_delivery": "Naqd",
   "card_on_delivery": "Karta",
-  "confirm_order": "Buyurtmani tasdiqlash"
-
+  "confirm_order": "Buyurtmani tasdiqlash",
+  "ordered_at": "Buyurtma qilindi",
+  "cancel": "Bekor qilish",
+  "sure_to_clear_cart": "Savatni tozalashni tasdiqlaysizmi?",
+  "current_orders": "Hozirgi",
+  "all_orders": "Barchasi"
 }

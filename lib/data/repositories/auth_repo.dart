@@ -46,6 +46,7 @@ class AuthRepository {
       );
       return authResult.user;
     } on FirebaseAuthException catch (e) {
+      TLoggerHelper.error('Error registering with email and password: ${e.message}');
       throw Exception(e.message);
     } catch (e) {
       TLoggerHelper.error('Error registering with email and password: $e');
@@ -61,6 +62,7 @@ class AuthRepository {
       );
       return authResult.user;
     } on FirebaseAuthException catch (e) {
+      TLoggerHelper.error('Error signing in with email and password: ${e.message}');
       throw Exception(e.message);
     } catch (e) {
       TLoggerHelper.error('Error signing in with email and password: $e');

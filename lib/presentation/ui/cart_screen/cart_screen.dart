@@ -3,8 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pizza/business_logic/bloc/order_bloc.dart';
 import 'package:pizza/business_logic/bloc/state_bloc.dart';
 import 'package:pizza/generated/locale_keys.g.dart';
 import 'package:pizza/presentation/ui/orders/order_detail.dart';
@@ -12,7 +10,7 @@ import 'package:pizza/utils/icons.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../data/database/food_database.dart';
 import '../../../data/model/food_model.dart';
-import '../../../data/model/order_model.dart';
+import '../../widgets/global dialog.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -38,7 +36,6 @@ class _CartScreenState extends State<CartScreen> {
       foodItems = items;
     });
   }
-
 
   void incrementCount(FoodModel item) {
     context.read<FoodBloc>().add(IncrementCountEvent(item));
@@ -90,7 +87,21 @@ class _CartScreenState extends State<CartScreen> {
         actions: [
           ZoomTapAnimation(
             onTap: () {
-              context.read<FoodBloc>().add(DeleteFoods());
+              GlobalDialog.show(
+                context: context,
+                title: LocaleKeys.clear_cart.tr(),
+                message:
+                    LocaleKeys.sure_to_clear_cart.tr(),
+                buttonYes: LocaleKeys.clear.tr(),
+                onYesPressed: () {
+                  Navigator.of(context).pop();
+                  context.read<FoodBloc>().add(DeleteFoods());
+                },
+                buttonNo: LocaleKeys.cancel.tr(),
+                onNoPressed: () {
+                  Navigator.of(context).pop();
+                },
+              );
             },
             child: Container(
               padding: const EdgeInsets.symmetric(
@@ -238,42 +249,44 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                           foodItems.isNotEmpty
                               ? Padding(
-                                      padding: const EdgeInsets.only(
-                                          bottom: 130.0, top: 5.0),
-                                      child: ZoomTapAnimation(
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => OrderDetailScreen(
-                                                foodItems: foodItems,
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                        child: Container(
-                                          width: MediaQuery.of(context).size.width,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(16),
-                                            color: Colors.black,
+                                  padding: const EdgeInsets.only(
+                                      bottom: 130.0, top: 5.0),
+                                  child: ZoomTapAnimation(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              OrderDetailScreen(
+                                            foodItems: foodItems,
                                           ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(vertical: 15.0),
-                                            child: Center(
-                                              child: Text(
-                                                "${LocaleKeys.order_now.tr()}  /${calculateTotalPrice(foodItems).toStringAsFixed(2)}${LocaleKeys.usd.tr()}",
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontFamily: 'Sora',
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 16,
-                                                ),
-                                              ),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(16),
+                                        color: Colors.black,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 15.0),
+                                        child: Center(
+                                          child: Text(
+                                            "${LocaleKeys.order_now.tr()}  /${calculateTotalPrice(foodItems).toStringAsFixed(2)}${LocaleKeys.usd.tr()}",
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: 'Sora',
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 16,
                                             ),
                                           ),
                                         ),
                                       ),
-                          )
+                                    ),
+                                  ),
+                                )
                               : const SizedBox(),
                         ],
                       ));

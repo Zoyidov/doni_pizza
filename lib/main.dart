@@ -19,7 +19,6 @@ import 'package:pizza/presentation/ui/splash_screen/splash_screen.dart';
 import 'package:pizza/presentation/ui/tab_box/tab_box.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:pizza/utils/logging/logger.dart';
-import 'data/database/orders_database.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -42,6 +41,13 @@ Future<void> main() async {
   // );
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) {
+  await FirebaseAppCheck.instance.activate(
+    androidProvider: AndroidProvider.debug,
+    appleProvider: AppleProvider.debug,
+  );
+  print(FirebaseAppCheck.instance.app.options.iosClientId);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
     runApp(
       EasyLocalization(
           assetLoader: const CodegenLoader(),
@@ -71,7 +77,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => OrderBloc()),
         BlocProvider(create: (context) => AuthUserCubit()),
         BlocProvider(create: (context) => LoginBloc(authRepository)),
-        BlocProvider(create: (context) => RegistrationBloc(authRepository, userRepository)),
+        BlocProvider(
+            create: (context) =>
+                RegistrationBloc(authRepository, userRepository)),
         BlocProvider(create: (context) => OTPVerificationBloc(authRepository)),
       ],
       child: MaterialApp(
@@ -80,19 +88,7 @@ class MyApp extends StatelessWidget {
         locale: context.locale,
         theme: ThemeData(useMaterial3: false),
         debugShowCheckedModeBanner: false,
-        home: BlocListener<AuthUserCubit, User?>(
-          listener: (_, state) {
-            TLoggerHelper.info('State Changed');
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (_) => state == null ? const WelcomeScreen() : const TabBox(),
-              ),
-              (route) => false,
-            );
-          },
-          child: const SplashScreen(),
-        ),
+        home: const SplashScreen()
       ),
     );
   }
