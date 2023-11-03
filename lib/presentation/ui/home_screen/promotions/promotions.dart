@@ -16,7 +16,6 @@ class Promotions extends StatelessWidget {
 
   Promotions({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return CarouselSlider(
@@ -28,61 +27,113 @@ class Promotions extends StatelessWidget {
         autoPlayInterval: const Duration(seconds: 2),
       ),
       items: promotionTexts.map((text) {
-        return Stack(
-          children: [
-            Container(
-              padding: const EdgeInsets.only(top: 60.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                    child: Text(
-                      LocaleKeys.promotions.tr(),
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      gradient: const LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [Colors.grey, Colors.black, Colors.black, Colors.black],
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 15.0),
+        return Container(
+          child: Stack(
+            children: [
+              Container(
+                padding: const EdgeInsets.only(top: 60.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10.0, vertical: 5.0),
                       child: Text(
-                        text,
+                        LocaleKeys.promotions.tr(),
                         style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Sora',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        gradient: const LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.grey,
+                            Colors.black,
+                            Colors.black,
+                            Colors.black
+                          ],
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 15.0),
+                        child: Text(
+                          text,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: 'Sora',
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                right: 0,
+                top: 0,
+                child: Image.asset(
+                  AppImages.all,
+                  width: 200,
+                ),
+              ),
+            ],
+          ),
+        );
+      }).toList()..insert(0, Container(
+        margin: EdgeInsets.symmetric(horizontal: 10.0,vertical: 40),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          gradient: LinearGradient(
+            begin: Alignment.centerRight,
+            end: Alignment.centerLeft,
+            colors: [Colors.grey, Colors.grey, Colors.black.withOpacity(0.9),Colors.black.withOpacity(0.9), Colors.black.withOpacity(0.9)],
+          ),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                      "Bomisilar eee...",
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: 'Sora',
+                        color: Colors.white,
+                      )
+                  ),
+                  Text(
+                      "Doni Pizza",
+                      style: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: 'Sora',
+                        color: Colors.white,
+                      )
                   ),
                 ],
               ),
             ),
-            Positioned(
-              right: 0,
-              top: 0,
-              child: Image.asset(
-                AppImages.all,
-                width: 200,
-              ),
-            ),
+            Image.asset(AppImages.promotionImage,height: 200,),
           ],
-        );
-      }).toList(),
+        ),
+      ),),
     );
   }
 }

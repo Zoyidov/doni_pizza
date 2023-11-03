@@ -203,6 +203,7 @@ class _CartScreenState extends State<CartScreen> {
                                             fontFamily: 'Sora'),
                                       ),
                                       subtitle: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
                                             '${item.price}${LocaleKeys.usd.tr()}',
