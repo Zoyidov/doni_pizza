@@ -50,5 +50,17 @@
   "resend_code_disable": "Resend Code Disable",
   "resend_in": "Resend in",
   "password_length_error": "Password must be at least 8 characters!",
-  "edit_profile": "Edit your profile data"
+  "edit_profile": "Edit your profile data",
+  "order_detail": "Order Detail",
+  "recipient": "Recipient",
+  "me": "Me",
+  "else": "Else",
+  "recipient_phone_number": "Recipient phone number",
+  "mandatory": "Mandatory",
+  "enter_address": "Enter address",
+  "address_mandatory": "Address is mandatory",
+  "payment_method": "Payment method",
+  "cash_on_delivery": "Cash on delivery",
+  "card_on_delivery": "Card on delivery",
+  "confirm_order": "Confirm order"
 }

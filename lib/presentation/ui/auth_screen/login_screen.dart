@@ -1,13 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:pizza/business_logic/bloc/auth/login_bloc.dart';
 import 'package:pizza/generated/locale_keys.g.dart';
 import 'package:pizza/presentation/ui/auth_screen/register_screen.dart';
 import 'package:pizza/presentation/ui/auth_screen/welcom_screen.dart';
+import 'package:pizza/generated/locale_keys.g.dart';
+import 'package:pizza/presentation/ui/auth_screen/register_screen.dart';
+import 'package:pizza/presentation/ui/profile_screen/widget/select_language.dart';
 import 'package:pizza/presentation/widgets/global_textfield.dart';
 import 'package:pizza/utils/colors.dart';
 import 'package:pizza/utils/constants/sizes.dart';
@@ -36,6 +39,11 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        toolbarHeight: -15,),
       backgroundColor: Colors.white,
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
@@ -85,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       caption: LocaleKeys.phone_number.tr(),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return LocaleKeys.error_phone_number.tr();
+                          return LocaleKeys.error_password.tr();
                         }
                         return null;
                       }),

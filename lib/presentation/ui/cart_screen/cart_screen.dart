@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:lottie/lottie.dart';
 import 'package:pizza/business_logic/bloc/order_bloc.dart';
 import 'package:pizza/business_logic/bloc/state_bloc.dart';
 import 'package:pizza/generated/locale_keys.g.dart';
+import 'package:pizza/presentation/ui/orders/order_detail.dart';
 import 'package:pizza/utils/icons.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../data/database/food_database.dart';
@@ -39,47 +39,6 @@ class _CartScreenState extends State<CartScreen> {
     });
   }
 
-  void _showLottieAndDeleteItems() async {
-    setState(() {
-      showLottie = true;
-    });
-
-    await Future.delayed(const Duration(seconds: 4));
-
-    double newTotalCost = calculateTotalPrice(foodItems);
-
-    orderNow(newTotalCost: newTotalCost);
-
-    Fluttertoast.showToast(
-      timeInSecForIosWeb: 3,
-      msg: LocaleKeys.order_success.tr(),
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.CENTER_RIGHT,
-      backgroundColor: Colors.white,
-      textColor: Colors.black,
-      fontSize: 22.0,
-    );
-    // ignore: use_build_context_synchronously
-    context.read<FoodBloc>().add(DeleteFoods());
-
-    setState(() {
-      showLottie = false;
-    });
-  }
-
-  void orderNow({double? newTotalCost}) async {
-    final orderDate = DateTime.now();
-
-    final foodNames = foodItems.map((item) => item.name).join(', ');
-
-    final order = OrderModel(
-      foodNames: foodNames,
-      totalCost: newTotalCost ?? 0.0,
-      timestamp: orderDate.toString(),
-    );
-
-    context.read<OrderBloc>().add(AddOrderEvent(order));
-  }
 
   void incrementCount(FoodModel item) {
     context.read<FoodBloc>().add(IncrementCountEvent(item));
@@ -278,48 +237,28 @@ class _CartScreenState extends State<CartScreen> {
                             ),
                           ),
                           foodItems.isNotEmpty
-                              ? showLottie
-                                  ? Padding(
+                              ? Padding(
                                       padding: const EdgeInsets.only(
                                           bottom: 130.0, top: 5.0),
                                       child: ZoomTapAnimation(
-                                        onTap: _showLottieAndDeleteItems,
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => OrderDetailScreen(
+                                                foodItems: foodItems,
+                                              ),
+                                            ),
+                                          );
+                                        },
                                         child: Container(
-                                          width:
-                                              MediaQuery.of(context).size.width,
+                                          width: MediaQuery.of(context).size.width,
                                           decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(16),
-                                            color: Colors.black,
-                                          ),
-                                          child: const Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 15.0),
-                                            child: Center(
-                                                child:
-                                                    CupertinoActivityIndicator(
-                                              color: Colors.white,
-                                            )),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  : Padding(
-                                      padding: const EdgeInsets.only(
-                                          bottom: 130.0, top: 5.0),
-                                      child: ZoomTapAnimation(
-                                        onTap: _showLottieAndDeleteItems,
-                                        child: Container(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(16),
+                                            borderRadius: BorderRadius.circular(16),
                                             color: Colors.black,
                                           ),
                                           child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 15.0),
+                                            padding: const EdgeInsets.symmetric(vertical: 15.0),
                                             child: Center(
                                               child: Text(
                                                 "${LocaleKeys.order_now.tr()}  /${calculateTotalPrice(foodItems).toStringAsFixed(2)}${LocaleKeys.usd.tr()}",
@@ -334,7 +273,7 @@ class _CartScreenState extends State<CartScreen> {
                                           ),
                                         ),
                                       ),
-                                    )
+                          )
                               : const SizedBox(),
                         ],
                       ));

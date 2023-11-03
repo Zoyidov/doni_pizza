@@ -27,22 +27,18 @@ class _SelectLanguageState extends State<SelectLanguage> {
   }
 
   void _loadSelectedLanguage() async {
-    final storageRepository = await StorageRepository.getInstance();
     final savedLanguage = StorageRepository.getString('selectedLanguage');
 
-    if (savedLanguage != null) {
-      setState(() {
-        selectedLanguage = savedLanguage;
-      });
+    setState(() {
+      selectedLanguage = savedLanguage;
+    });
     }
-  }
 
   void handleLanguageChange(String language) {
     setState(() {
       selectedLanguage = language;
     });
 
-    final storageRepository = StorageRepository.getInstance();
     StorageRepository.putString('selectedLanguage', language);
     context.setLocale(Locale(language));
   }
@@ -64,7 +60,7 @@ class _SelectLanguageState extends State<SelectLanguage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: isProcessing // Conditionally hide the app bar when processing
+      appBar: isProcessing
           ? null
           : AppBar(
         backgroundColor: Colors.white,

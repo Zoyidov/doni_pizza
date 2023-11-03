@@ -46,7 +46,10 @@ Future<void> main() async {
           supportedLocales: const [Locale('en'), Locale('ru'), Locale('uz')],
           path: 'assets/translations',
           fallbackLocale: const Locale('en'),
+
           child: MyApp()),
+          child:  MyApp()),
+
     );
   });
 }

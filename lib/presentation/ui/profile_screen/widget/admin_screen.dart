@@ -1,33 +1,101 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pizza/utils/icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
+import 'package:pizza/utils/icons.dart';
 
 class AdminScreen extends StatelessWidget {
-  const AdminScreen({super.key});
+  const AdminScreen({Key? key});
 
   Future<void> _sendEmail(String email) async {
-    final Uri emailLaunchUri = Uri(
-      scheme: 'mailto',
-      path: email,
-    );
-
+    final emailLaunchUri = Uri(scheme: 'mailto', path: email);
     if (await canLaunch(emailLaunchUri.toString())) {
       await launch(emailLaunchUri.toString());
     }
   }
 
   Future<void> _makeCall(String phoneNumber) async {
-    final Uri phoneLaunchUri = Uri(
-      scheme: 'tel',
-      path: phoneNumber,
-    );
-
+    final phoneLaunchUri = Uri(scheme: 'tel', path: phoneNumber);
     if (await canLaunch(phoneLaunchUri.toString())) {
       await launch(phoneLaunchUri.toString());
     }
+  }
+
+  Widget _buildContactInfo(String name, String email, String phoneNumber) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Developer $name:\n",
+          style: TextStyle(
+            color: Colors.black,
+            fontFamily: 'Sora',
+            fontSize: 18,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+        Row(
+          children: [
+            Text(
+              "Email: ",
+              style: const TextStyle(
+                color: Colors.black,
+                fontFamily: 'Sora',
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            InkWell(
+              onTap: () => _sendEmail(email),
+              child: Row(
+                children: [
+                  Text(
+                    "$email   ",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontFamily: 'Sora',
+                      fontSize: 13,
+                      fontWeight: FontWeight.w200,
+                    ),
+                  ),
+                  Icon(Icons.email, color: Colors.orange),
+                ],
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Text(
+              "Telefon: ",
+              style: const TextStyle(
+                color: Colors.black,
+                fontFamily: 'Sora',
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            ZoomTapAnimation(
+              onTap: () => _makeCall(phoneNumber),
+              child: Row(
+                children: [
+                  Text(
+                    "$phoneNumber   ",
+                    style: TextStyle(
+                      color: Colors.indigo,
+                      fontFamily: 'Sora',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w200,
+                    ),
+                  ),
+                  Icon(Icons.phone, color: Colors.green),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 
   @override
@@ -39,16 +107,16 @@ class AdminScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         automaticallyImplyLeading: false,
-        title: const Icon(CupertinoIcons.wrench_fill, color: Colors.black),
+        title: const Icon(Icons.settings, color: Colors.black),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 """Tizimda muammolar paydo bo'lsa, Ilova developer lari bilan bog'laning!\n\nUlar bilan bog'lanish uchun quyidagi ma'lumotlarni ishlatishingiz mumkin:
 """,
                 style: TextStyle(
@@ -58,145 +126,12 @@ class AdminScreen extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              Text("Developer Islomjon:\n",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Sora',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w800,
-                  )),
-              Row(
-                children: [
-                  Text(
-                    "Email: ",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Sora',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () => _sendEmail("islomjon20010930@gmail.com"),
-                    child: Row(
-                      children: [
-                        Text(
-                          "islomjon20010930@gmail.com   ",
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontFamily: 'Sora',
-                            fontSize: 13,
-                            fontWeight: FontWeight.w200,
-                          ),
-                        ),
-                        Icon(Icons.email,color: CupertinoColors.systemOrange,)
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text(
-                    "Telefon: ",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Sora',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  ZoomTapAnimation(
-                    onTap: () => _makeCall("+998949020130"),
-                    child: Row(
-                      children: [
-                        Text(
-                          "+(998)-94-902-01-30   ",
-                          style: TextStyle(
-                            color: Colors.indigo,
-                            fontFamily: 'Sora',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w200,
-                          ),
-                        ),
-                        Icon(Icons.phone,color: CupertinoColors.activeGreen,)
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 50.0,),
-              Text("Developer Nurmuxammad:\n",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Sora',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w800,
-                  )),
-              Row(
-                children: [
-                  Text(
-                    "Email: ",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Sora',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () => _sendEmail("nurmuhammadzoyidov@gmail.com"),
-                    child: Row(
-                      children: [
-                        Text(
-                          "nurmuhammadzoyidov@gmail.com   ",
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontFamily: 'Sora',
-                            fontSize: 13,
-                            fontWeight: FontWeight.w200,
-                          ),
-                        ),
-                        Icon(Icons.email,color: CupertinoColors.systemOrange,)
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text(
-                    "Telefon: ",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Sora',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  ZoomTapAnimation(
-                    onTap: () => _makeCall("+998912719555"),
-                    child: Row(
-                      children: [
-                        Text(
-                          "+(998)-91-271-95-55   ",
-                          style: TextStyle(
-                            color: Colors.indigo,
-                            fontFamily: 'Sora',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w200,
-                          ),
-                        ),
-                        Icon(Icons.phone,color: CupertinoColors.activeGreen,)
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20.0,),
+              _buildContactInfo("Islomjon", "islomjon20010930@gmail.com", "+(998) 94 902-01-30"),
+              const SizedBox(height: 50.0),
+              _buildContactInfo("Nurmuxammad", "nurmuhammadzoyidov@gmail.com", "+(998) 91 271-95-55"),
+              const SizedBox(height: 20.0),
               Center(child: SvgPicture.asset(AppImages.dev)),
-              Text("Taklif va Shikoyatlar uchun"),
-
+              const Center(child: Text("Taklif va Shikoyatlar uchun")),
             ],
           ),
         ),

@@ -50,5 +50,17 @@
   "resend_code_disable": "Через 1 минуту код может будет отправлен снова",
   "resend_in": "Отправить код повторно через",
   "password_length_error": "Пароль должен быть не менее 8 символов!",
-  "edit_profile": "Редактировать данные профиля"
+  "edit_profile": "Редактировать данные профиля",
+  "order_detail": "Детали заказа",
+  "recipient": "Получатель",
+  "me": "Мне",
+  "else": "Иначе",
+  "recipient_phone_number": "Номер телефона получателя",
+  "mandatory": "Обязательно",
+  "enter_address": "Введите адрес",
+  "address_mandatory": "Адрес обязателен",
+  "payment_method": "Способ оплаты",
+  "cash_on_delivery": "Наличные",
+  "card_on_delivery": "Карта",
+  "confirm_order": "Подтвердить заказ"
 }
