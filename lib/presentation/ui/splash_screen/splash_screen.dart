@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pizza/business_logic/cubit/auth_user_cubit/auth_user_cubit.dart';
 import 'package:pizza/presentation/ui/auth_screen/welcom_screen.dart';
+import 'package:pizza/presentation/ui/router/router_app_screen.dart';
 import 'package:pizza/presentation/ui/tab_box/tab_box.dart';
 import 'package:pizza/utils/icons.dart';
 
@@ -38,12 +39,8 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     _controller.addStatusListener(
       (status) {
         if (status == AnimationStatus.completed) {
-          Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-                builder: (context) => context.read<AuthUserCubit>().state == null
-                    ? const WelcomeScreen()
-                    : const TabBox()),
-            (route) => false,
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const RouterApp()),
           );
         }
       },

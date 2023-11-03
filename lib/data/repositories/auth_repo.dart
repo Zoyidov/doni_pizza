@@ -8,22 +8,33 @@ class AuthRepository {
 
   Future<User?> signInWithGoogle() async {
     try {
+      print('ok1');
+      await _googleSignIn.signOut();
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      print('ok5');
+      print(googleUser == null);
       if (googleUser == null) {
         return null;
       }
+      print('ok2');
 
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      print('ok3');
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-
+      print('ok4');
       final UserCredential authResult = await _auth.signInWithCredential(credential);
+      print('ok5');
       return authResult.user;
+    } on FirebaseAuthException catch (e) {
+      TLoggerHelper.error(e.message!);
+      throw Exception(e.message);
     } catch (e) {
-      print('Error signing in with Google: $e');
-      return null;
+      TLoggerHelper.error('Error signing in with Google: $e');
+      throw Exception('Error signing in with Google: $e');
+      // return null;
     }
   }
 
