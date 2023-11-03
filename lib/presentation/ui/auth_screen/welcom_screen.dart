@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:pizza/business_logic/bloc/auth/login_bloc.dart';
 import 'package:pizza/generated/locale_keys.g.dart';
 import 'package:pizza/presentation/ui/auth_screen/login_screen.dart';
 import 'package:pizza/presentation/ui/auth_screen/register_screen.dart';
@@ -91,7 +93,9 @@ class WelcomeScreen extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: OutlinedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.read<LoginBloc>().add(GoogleLoginEvent());
+                      },
                       style: ButtonStyles.roundedButtonStyle,
                       label: Text(
                         TTexts.loginWithGoogle,

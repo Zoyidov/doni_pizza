@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pizza/data/repositories/auth_repo.dart';
 import 'package:pizza/utils/formatters/formatter.dart';
+import 'package:pizza/utils/logging/logger.dart';
 
 // Define events
 abstract class LoginEvent {}
@@ -14,6 +15,8 @@ class PhoneLoginEvent extends LoginEvent {
     required this.password,
   });
 }
+
+class GoogleLoginEvent extends LoginEvent {}
 
 // Define states
 abstract class LoginState {}
@@ -44,6 +47,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
         emit(LoginSuccess());
       } catch (e) {
+        emit(LoginFailure(e.toString()));
+      }
+    });
+    on<GoogleLoginEvent>((GoogleLoginEvent event, emit) async {
+      try {
+        await authRepository.signInWithGoogle();
+        TLoggerHelper.info('Google login');
+      } catch (e) {
+        TLoggerHelper.info(e.toString());
         emit(LoginFailure(e.toString()));
       }
     });

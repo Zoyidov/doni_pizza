@@ -50,21 +50,21 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAM4MqZWX855A4KAs44HNhRM6A7zFqB10Y',
-    appId: '1:613468850287:android:978bac8ce87462d8c9e59a',
-    messagingSenderId: '613468850287',
-    projectId: 'uzum-4672c',
-    storageBucket: 'uzum-4672c.appspot.com',
+    apiKey: 'AIzaSyBb4oBD3ErJIY_JbvSzmgKvZ1NL3v-hu5s',
+    appId: '1:740038564434:android:4d7f58996b744b93645d8b',
+    messagingSenderId: '740038564434',
+    projectId: 'doni-pizza',
+    storageBucket: 'doni-pizza.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCJvrWkd1uiJjwzybFawNOOQ42mz4EE-tQ',
-    appId: '1:613468850287:ios:167485a768551834c9e59a',
-    messagingSenderId: '613468850287',
-    projectId: 'uzum-4672c',
-    storageBucket: 'uzum-4672c.appspot.com',
-    androidClientId: '613468850287-5o162sgsj7sqs0rt44q0f05mcpegs9ka.apps.googleusercontent.com',
-    iosClientId: '613468850287-kjneid7qrnmi276i8dl9l9evul0ntek0.apps.googleusercontent.com',
+    apiKey: 'AIzaSyA8WCCDuTDAd-_IAx5-4D034jkfh3kvg6M',
+    appId: '1:740038564434:ios:98580dfa6b444a13645d8b',
+    messagingSenderId: '740038564434',
+    projectId: 'doni-pizza',
+    storageBucket: 'doni-pizza.appspot.com',
+    androidClientId: '740038564434-84n8rah79qkes809p5q88si8chbj1vn7.apps.googleusercontent.com',
+    iosClientId: '740038564434-m8hpb0d0ifkkpl3gch3oc1vs88e8jgvd.apps.googleusercontent.com',
     iosBundleId: 'com.example.pizza',
   );
 }

@@ -79,163 +79,164 @@ class _RegisterScreenState extends State<RegisterScreen> {
     confirmPasswordController.text = 'test1234';
 
     return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            const SizedBox(height: 100),
-            const Center(
+        physics: const BouncingScrollPhysics(),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              const SizedBox(height: 100),
+              const Center(
+                  child: Text(
+                'Doni Pizza',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'Sora',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30),
+              )),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
                 child: Text(
-              'Doni Pizza',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Sora',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30),
-            )),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
-              child: Text(
-                LocaleKeys.auth_desc.tr(),
-                style: TextStyle(color: Colors.black, fontFamily: 'Sora', fontSize: 18),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20),
-              child: Column(
-                children: [
-                  GlobalTextField(
-                      controller: nameController,
-                      hintText: 'Doni Pizza',
-                      keyboardType: TextInputType.name,
-                      textInputAction: TextInputAction.next,
-                      caption: LocaleKeys.Name.tr(),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return LocaleKeys.enter_name.tr();
-                        }
-                        return null;
-                      }),
-                  GlobalTextField(
-                      controller: phoneController,
-                      hintText: '+(998) 99-999-99',
-                      keyboardType: TextInputType.phone,
-                      textInputAction: TextInputAction.next,
-                      caption: LocaleKeys.phone_number.tr(),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return LocaleKeys.error_phone_number.tr();
-                        }
-                        return null;
-                      }),
-                  GlobalTextField(
-                    hintText: '********',
-                    keyboardType: TextInputType.visiblePassword,
-                    textInputAction: TextInputAction.next,
-                    caption: LocaleKeys.password.tr(),
-                    controller: passwordController,
-                    validator: passwordsMatch,
-                    max: 1,
-                  ),
-                  GlobalTextField(
-                    hintText: '********',
-                    keyboardType: TextInputType.visiblePassword,
-                    textInputAction: TextInputAction.done,
-                    caption: LocaleKeys.confirm_password.tr(),
-                    controller: confirmPasswordController,
-                    validator: passwordsMatch,
-                    max: 1,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 20.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Colors.grey),
-                    ),
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(16.0),
-                      onTap: () {
-                        if (_formKey.currentState!.validate()) {
-                          if (passwordController.text == confirmPasswordController.text) {
-                            // Navigator.of(context).push(MaterialPageRoute(
-                            //   builder: (context) => const ConfirmVerificationCodeScreen(),
-                            // ));
-                            context.read<RegistrationBloc>().add(RegisterEvent(
-                                  name: nameController.text.trim(),
-                                  phoneNumber: phoneController.text.trim(),
-                                  password: passwordController.text.trim(),
-                                ));
-                          }
-                        }
-                      },
-                      child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Center(
-                            child: BlocBuilder<RegistrationBloc, RegistrationState>(
-                              builder: (context, state) {
-                                if (state is RegistrationLoading) {
-                                  return const Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                          height: 10,
-                                          width: 10,
-                                          child: CircularProgressIndicator()),
-                                      SizedBox(width: 10),
-                                      Text(
-                                        TTexts.loading,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontFamily: 'Sora',
-                                            fontWeight: FontWeight.bold),
-                                      )
-                                    ],
-                                  );
-                                }
-                                return Text(
-                                  LocaleKeys.sign_up.tr(),
-                                  style: const TextStyle(
-                                      color: Colors.black,
-                                      fontFamily: 'Sora',
-                                      fontWeight: FontWeight.bold),
-                                );
-                              },
-                            ),
-                          )),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-              ),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16), border: Border.all(color: Colors.grey)),
-              child: InkWell(
-                borderRadius: BorderRadius.circular(16.0),
-                onTap: () {},
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    SvgPicture.asset(AppImages.google),
-                    const SizedBox(
-                      width: 10.0,
-                    ),
-                    Text(
-                      LocaleKeys.continue_with_google.tr(),
-                    ),
-                  ]),
+                  LocaleKeys.auth_desc.tr(),
+                  style: TextStyle(color: Colors.black, fontFamily: 'Sora', fontSize: 18),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 100,
-            )
-          ],
-        ),
-      );
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20),
+                child: Column(
+                  children: [
+                    GlobalTextField(
+                        controller: nameController,
+                        hintText: 'Doni Pizza',
+                        keyboardType: TextInputType.name,
+                        textInputAction: TextInputAction.next,
+                        caption: LocaleKeys.Name.tr(),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return LocaleKeys.enter_name.tr();
+                          }
+                          return null;
+                        }),
+                    GlobalTextField(
+                        controller: phoneController,
+                        hintText: '+(998) 99-999-99',
+                        keyboardType: TextInputType.phone,
+                        textInputAction: TextInputAction.next,
+                        caption: LocaleKeys.phone_number.tr(),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return LocaleKeys.error_phone_number.tr();
+                          }
+                          return null;
+                        }),
+                    GlobalTextField(
+                      hintText: '********',
+                      keyboardType: TextInputType.visiblePassword,
+                      textInputAction: TextInputAction.next,
+                      caption: LocaleKeys.password.tr(),
+                      controller: passwordController,
+                      validator: passwordsMatch,
+                      max: 1,
+                    ),
+                    GlobalTextField(
+                      hintText: '********',
+                      keyboardType: TextInputType.visiblePassword,
+                      textInputAction: TextInputAction.done,
+                      caption: LocaleKeys.confirm_password.tr(),
+                      controller: confirmPasswordController,
+                      validator: passwordsMatch,
+                      max: 1,
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 20.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: Colors.grey),
+                      ),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(16.0),
+                        onTap: () {
+                          if (_formKey.currentState!.validate()) {
+                            if (passwordController.text == confirmPasswordController.text) {
+                              // Navigator.of(context).push(MaterialPageRoute(
+                              //   builder: (context) => const ConfirmVerificationCodeScreen(),
+                              // ));
+                              context.read<RegistrationBloc>().add(RegisterEvent(
+                                    name: nameController.text.trim(),
+                                    phoneNumber: phoneController.text.trim(),
+                                    password: passwordController.text.trim(),
+                                  ));
+                            }
+                          }
+                        },
+                        child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Center(
+                              child: BlocBuilder<RegistrationBloc, RegistrationState>(
+                                builder: (context, state) {
+                                  if (state is RegistrationLoading) {
+                                    return const Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                            height: 10,
+                                            width: 10,
+                                            child: CircularProgressIndicator()),
+                                        SizedBox(width: 10),
+                                        Text(
+                                          TTexts.loading,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontFamily: 'Sora',
+                                              fontWeight: FontWeight.bold),
+                                        )
+                                      ],
+                                    );
+                                  }
+                                  return Text(
+                                    LocaleKeys.sign_up.tr(),
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontFamily: 'Sora',
+                                        fontWeight: FontWeight.bold),
+                                  );
+                                },
+                              ),
+                            )),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                ),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: Colors.grey)),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(16.0),
+                  onTap: () {},
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      SvgPicture.asset(AppImages.google),
+                      const SizedBox(
+                        width: 10.0,
+                      ),
+                      Text(
+                        LocaleKeys.continue_with_google.tr(),
+                      ),
+                    ]),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 100,
+              )
+            ],
+          ),
+        ));
   }
 }
