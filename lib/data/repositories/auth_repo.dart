@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:pizza/utils/logging/logger.dart';
 
 class AuthRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -26,30 +27,34 @@ class AuthRepository {
     }
   }
 
-  Future<User?> signInWithPhoneNumber(
-      {required String phoneNumber,
-      required Function(String verificationId, int? resendToken) codeSent,
-      required Function(PhoneAuthCredential credential) verificationCompleted,
-      required Function(FirebaseAuthException e) verificationFailed,
-      required Function(String verificationId) codeAutoRetrievalTimeout}) async {
+  Future<User?> registerWithEmailAndPassword(String email, String password) async {
     try {
-      // Start the phone number verification process
-      await _auth.verifyPhoneNumber(
-        phoneNumber: phoneNumber,
-        // timeout: const Duration(seconds: 60),
-        verificationCompleted: verificationCompleted,
-        verificationFailed: verificationFailed,
-        codeSent: codeSent,
-        codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
+      final UserCredential authResult = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
       );
+      return authResult.user;
+    } on FirebaseAuthException catch (e) {
+      throw Exception(e.message);
     } catch (e) {
-      print('Error verifying phone number: $e');
+      TLoggerHelper.error('Error registering with email and password: $e');
+      throw Exception('Error registering with email and password: $e');
     }
-    return null;
   }
 
-  Future<void> signInWithCredential(PhoneAuthCredential credential) async {
-    await _auth.signInWithCredential(credential);
+  Future<User?> signInWithEmailAndPassword(String email, String password) async {
+    try {
+      final UserCredential authResult = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return authResult.user;
+    } on FirebaseAuthException catch (e) {
+      throw Exception(e.message);
+    } catch (e) {
+      TLoggerHelper.error('Error signing in with email and password: $e');
+      return null;
+    }
   }
 
   Future<void> signOut() async {

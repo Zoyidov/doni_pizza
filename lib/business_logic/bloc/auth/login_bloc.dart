@@ -1,13 +1,18 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pizza/data/repositories/auth_repo.dart';
+import 'package:pizza/utils/formatters/formatter.dart';
 
 // Define events
 abstract class LoginEvent {}
 
 class PhoneLoginEvent extends LoginEvent {
   final String phoneNumber;
+  final String password;
 
-  PhoneLoginEvent(this.phoneNumber);
+  PhoneLoginEvent({
+    required this.phoneNumber,
+    required this.password,
+  });
 }
 
 // Define states
@@ -30,12 +35,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthRepository authRepository;
 
   LoginBloc(this.authRepository) : super(LoginInitial()) {
-    on((PhoneLoginEvent event, emit) async {
+    on<PhoneLoginEvent>((PhoneLoginEvent event, emit) async {
       emit(LoginLoading());
       try {
-        // Call the authentication method in the AuthRepository
-        // For phone authentication, it might involve OTP code verification
-        // If successful, yield LoginSuccess, otherwise yield LoginFailure
+        await Future.delayed(const Duration(seconds: 3));
+        await authRepository.signInWithEmailAndPassword(
+            TFormatter.convertPhoneNumberToEmail(event.phoneNumber), event.password);
+
+        emit(LoginSuccess());
       } catch (e) {
         emit(LoginFailure(e.toString()));
       }
