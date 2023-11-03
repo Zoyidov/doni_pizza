@@ -1,6 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pizza/data/model/mymodels/user_model.dart';
 import 'package:pizza/data/repositories/auth_repo.dart';
+import 'package:pizza/data/repositories/user_repo.dart';
+import 'package:pizza/utils/formatters/formatter.dart';
+import 'package:pizza/utils/logging/logger.dart';
 
 // Define events
 abstract class RegistrationEvent {}
@@ -10,7 +14,11 @@ class RegisterEvent extends RegistrationEvent {
   final String phoneNumber;
   final String password;
 
-  RegisterEvent(this.name, this.phoneNumber, this.password);
+  RegisterEvent({
+    required this.name,
+    required this.phoneNumber,
+    required this.password,
+  });
 }
 
 // Define states
@@ -28,49 +36,28 @@ class RegistrationFailure extends RegistrationState {
   RegistrationFailure(this.error);
 }
 
-class RegistrationCodeSent extends RegistrationState {
-  final String verificationId;
-  final int? resendToken;
-
-  RegistrationCodeSent(this.verificationId, this.resendToken);
-}
-
-class RegistrationAutoRetrievalTimeout extends RegistrationState {
-  final String verificationId;
-  RegistrationAutoRetrievalTimeout(this.verificationId);
-}
-
 // Create the BLoC
 class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
   final AuthRepository authRepository;
-  FirebaseAuth auth = FirebaseAuth.instance;
+  final UserRepository userRepository;
 
-  RegistrationBloc(this.authRepository) : super(RegistrationInitial()) {
+  RegistrationBloc(this.authRepository, this.userRepository) : super(RegistrationInitial()) {
     on<RegisterEvent>((RegisterEvent event, Emitter emit) async {
       emit(RegistrationLoading());
       try {
-        print(event.phoneNumber);
-        final result = await authRepository.signInWithPhoneNumber(
+        TLoggerHelper.info(event.phoneNumber);
+        TLoggerHelper.info(TFormatter.convertPhoneNumberToEmail(event.phoneNumber));
+        final User? authUser = await authRepository.registerWithEmailAndPassword(
+            TFormatter.convertPhoneNumberToEmail(event.phoneNumber), event.password);
+        final user = UserModel(
+          id: authUser!.uid,
+          name: event.name,
           phoneNumber: event.phoneNumber,
-          codeSent: (String verificationId, int? resendToken) {
-            emit(RegistrationCodeSent(verificationId, resendToken));
-          },
-          verificationCompleted: (PhoneAuthCredential credential) async {
-            await auth.signInWithCredential(credential);
-          },
-          verificationFailed: (FirebaseAuthException e) {
-            print(e.message);
-            // emit(RegistrationFailure(e.toString()));
-          },
-          codeAutoRetrievalTimeout: (String verificationId) {
-            emit(RegistrationAutoRetrievalTimeout(verificationId));
-          },
+          imageUrl: '',
+          password: event.password,
         );
-
-        if (result != null) {
-          // Handle success or further actions if needed
-          emit(RegistrationSuccess());
-        }
+        await userRepository.storeUserData(user);
+        emit(RegistrationSuccess());
       } catch (e) {
         emit(RegistrationFailure(e.toString()));
       }

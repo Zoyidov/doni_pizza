@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pizza/business_logic/cubit/auth_user_cubit/auth_user_cubit.dart';
 import 'package:pizza/generated/locale_keys.g.dart';
 import 'package:pizza/presentation/ui/auth_screen/login_screen.dart';
 import 'package:pizza/presentation/ui/profile_screen/widget/about_us.dart';
@@ -9,12 +11,15 @@ import 'package:pizza/presentation/ui/profile_screen/widget/admin_screen.dart';
 import 'package:pizza/presentation/ui/profile_screen/widget/edit_profile.dart';
 import 'package:pizza/presentation/ui/profile_screen/widget/select_language.dart';
 import 'package:pizza/presentation/widgets/dialog_gallery_camera.dart';
+import 'package:pizza/utils/logging/logger.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../cart_screen/cart_screen.dart';
 import 'widget/profile_detail.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key,});
+  const ProfileScreen({
+    super.key,
+  });
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -54,7 +59,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             padding: const EdgeInsets.only(right: 15.0, bottom: 5.0),
             child: IconButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutUsScreen()));
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => const AboutUsScreen()));
               },
               icon: const Icon(Icons.account_balance_outlined, color: Colors.black),
             ),
@@ -84,25 +90,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 child: selectedImagePath != null
                     ? Stack(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(120),
-                      child: Image.file(
-                        File(selectedImagePath!),
-                        height: 120,
-                        width: 120,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ],
-                )
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(120),
+                            child: Image.file(
+                              File(selectedImagePath!),
+                              height: 120,
+                              width: 120,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ],
+                      )
                     : const Padding(
-                  padding: EdgeInsets.all(40.0),
-                  child: Icon(
-                    CupertinoIcons.camera,
-                    color: Colors.white,
-                  ),
-                ),
+                        padding: EdgeInsets.all(40.0),
+                        child: Icon(
+                          CupertinoIcons.camera,
+                          color: Colors.white,
+                        ),
+                      ),
               ),
             ),
             Column(
@@ -131,16 +137,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   ProfileDetail(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfileScreen()));
+                      Navigator.push(
+                          context, MaterialPageRoute(builder: (context) => EditProfileScreen()));
                     },
                     textColor: Colors.black,
                     icon: const Icon(Icons.person),
                     text: LocaleKeys.my_profile.tr(),
-                    showArrow: true, showSwitch: false,
+                    showArrow: true,
+                    showSwitch: false,
                   ),
                   ProfileDetail(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const SelectLanguage()));
+                      Navigator.push(
+                          context, MaterialPageRoute(builder: (context) => const SelectLanguage()));
                     },
                     textColor: Colors.black,
                     icon: const Icon(Icons.language),
@@ -157,7 +166,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   // ),
                   ProfileDetail(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminScreen()));
+                      Navigator.push(
+                          context, MaterialPageRoute(builder: (context) => const AdminScreen()));
                     },
                     textColor: Colors.black,
                     icon: const Icon(Icons.admin_panel_settings_rounded),
@@ -167,6 +177,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   ProfileDetail(
                     onTap: () {
+                      TLoggerHelper.info((context.read<AuthUserCubit>().state == null).toString());
+                      print(context.read<AuthUserCubit>().state?.uid);
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -208,7 +220,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               TextButton(
                                 onPressed: () {
                                   Navigator.pop(context);
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const LoginScreen()));
+                                  context.read<AuthUserCubit>().signOut();
+                                  // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const LoginScreen()));
                                 },
                                 child: Text(
                                   LocaleKeys.yes.tr(),
