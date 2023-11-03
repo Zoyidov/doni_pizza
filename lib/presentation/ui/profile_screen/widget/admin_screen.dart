@@ -4,9 +4,14 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import 'package:pizza/utils/icons.dart';
 
-class AdminScreen extends StatelessWidget {
-  const AdminScreen({Key? key});
+class AdminScreen extends StatefulWidget {
+  const AdminScreen({super.key});
 
+  @override
+  State<AdminScreen> createState() => _AdminScreenState();
+}
+
+class _AdminScreenState extends State<AdminScreen> {
   Future<void> _sendEmail(String email) async {
     final emailLaunchUri = Uri(scheme: 'mailto', path: email);
     if (await canLaunch(emailLaunchUri.toString())) {

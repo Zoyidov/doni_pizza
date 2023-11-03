@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pizza/business_logic/bloc/auth/registration_bloc.dart';
@@ -11,7 +10,6 @@ import 'package:pizza/utils/dialogs/snackbar_dialogs.dart';
 import 'package:pizza/utils/icons.dart';
 
 import '../../../generated/locale_keys.g.dart';
-import '../tab_box/tab_box.dart';
 import 'confirm_verification_code.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -52,6 +50,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        toolbarHeight: -15,
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
       body: BlocListener<RegistrationBloc, RegistrationState>(
         listener: (context, state) {
           if (state is RegistrationFailure) {
@@ -72,6 +75,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Widget _buildRegistrationForm(BuildContext context) {
+  
     // TODO remove this
     nameController.text = 'Alisher';
     phoneController.text = '+998 99 999 99 99';

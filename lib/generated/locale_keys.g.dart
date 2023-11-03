@@ -65,4 +65,5 @@ abstract class  LocaleKeys {
   static const cash_on_delivery = 'cash_on_delivery';
   static const card_on_delivery = 'card_on_delivery';
   static const confirm_order = 'confirm_order';
+  static const ordered_at = 'ordered_at';
 }
