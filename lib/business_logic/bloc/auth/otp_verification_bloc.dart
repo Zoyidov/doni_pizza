@@ -35,8 +35,6 @@ class OTPVerificationBloc extends Bloc<OTPVerificationEvent, OTPVerificationStat
     on<VerifyOTPEvent>((VerifyOTPEvent event, emit) async {
       emit(OTPVerificationLoading());
       try {
-        await authRepository.signInWithCredential(PhoneAuthProvider.credential(
-            verificationId: event.verificationId, smsCode: event.otpCode));
         emit(OTPVerificationSuccess());
       } catch (e) {
         emit(OTPVerificationFailure(e.toString()));
